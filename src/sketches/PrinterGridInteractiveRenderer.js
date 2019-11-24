@@ -1,4 +1,6 @@
-export default class PrinterGridInteractiveRenderer{
+import Utils from "./Utils";
+
+export default class PrinterGridInteractiveRenderer {
     p;
     canvas;
 
@@ -49,13 +51,17 @@ export default class PrinterGridInteractiveRenderer{
 
         for (let w = 0; w < this.printerGridSize.width; w++) {
             for (let h = 0; h < this.printerGridSize.height; h++) {
-                let fillColor = this.p.color(255);
+
+                /**
+                 * @type {p5.Color} fillColor
+                 */
+                let fillColor = this.printerGrid.getCell(w, h) ? this.p.color(0) : this.p.color(255);
 
                 p1.set(w * this.cellSize, h * this.cellSize);
                 p2.set((w + 1) * this.cellSize, (h + 1) * this.cellSize);
 
-                if(this.isInside(mouse, p1, p2)){
-                    fillColor = this.p.color(255, 0, 0);
+                if (Utils.isInside(mouse, p1, p2)) {
+                    fillColor["levels"][1] = 125;
                 }
 
                 this.canvas.fill(fillColor);
@@ -67,12 +73,17 @@ export default class PrinterGridInteractiveRenderer{
     }
 
     /**
-     * @param {p5.Vector} q Vector to test
-     * @param {p5.Vector} p1 Rectangle corner 1
-     * @param {p5.Vector} p2 Rectangle corner 2
-     * @return {boolean}
+     * @param {p5.Vector} point
+     * @param {boolean} state
      */
-    isInside(q, p1, p2){
-        return (q.x >= p1.x && q.x < p2.x && q.y >= p1.y && q.y < p2.y);
+    setCellAtPoint(point, state = true){
+        point.x = Math.floor(point.x / this.cellSize);
+        point.y = Math.floor(point.y / this.cellSize);
+
+        if(!Utils.isInside(point, this.p.createVector(0, 0), this.p.createVector(this.printerGridSize.width, this.printerGridSize.height))){
+            return;
+        }
+
+        this.printerGrid.setCell(point.x, point.y, state);
     }
 }

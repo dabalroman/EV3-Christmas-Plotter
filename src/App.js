@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import P5Wrapper from 'react-p5-wrapper';
 import './App.css';
 import GridEditor from "./sketches/GridEditor";
+import GridEditorStyles from "./sketches/GridEditor.module.css";
 
 class App extends Component {
     constructor(props) {
@@ -17,8 +18,7 @@ class App extends Component {
 
     render() {
         return (
-            <div>
-                {/*<button onClick={this.randomColor}>Random Color</button>*/}
+            <div className={GridEditorStyles.editorCanvas} onContextMenu={(e)=>{e.preventDefault();}}>
                 <P5Wrapper sketch={GridEditor}/>
             </div>
         );
