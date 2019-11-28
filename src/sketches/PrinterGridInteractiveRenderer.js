@@ -2,6 +2,7 @@ import Utils from "./Utils";
 
 export default class PrinterGridInteractiveRenderer {
     p;
+    gridCanvas;
     canvas;
 
     /**
@@ -25,9 +26,14 @@ export default class PrinterGridInteractiveRenderer {
     position;
 
     /**
-     * @type {boolean} updateRequired
+     * @type {boolean} gridUpdateRequired
      */
-    updateRequired = true;
+    gridUpdateRequired = true;
+
+    /**
+     * @type {boolean} canvasUpdateRequired
+     */
+    canvasUpdateRequired = true;
 
     /**
      * @param p p5 instance
@@ -39,63 +45,106 @@ export default class PrinterGridInteractiveRenderer {
         this.p = p;
         this.printerGrid = printerGrid;
         this.printerGridSize = this.printerGrid.getSize();
-        this.canvas = p.createGraphics(this.printerGridSize.width * cellSize, this.printerGridSize.height * cellSize);
-        this.canvas.noStroke();
         this.cellSize = cellSize;
         this.position = position;
+
+        this.canvas = p.createGraphics(this.printerGridSize.width * cellSize, this.printerGridSize.height * cellSize);
+        this.canvas.noStroke();
+
+        this.gridCanvas = p.createGraphics(this.printerGridSize.width * cellSize, this.printerGridSize.height * cellSize);
+        this.gridCanvas.noStroke();
     }
 
     render() {
-        if(!this.updateRequired){
-            return this.canvas;
+        if (this.gridUpdateRequired) {
+            this.renderGrid();
         }
 
+        if (this.canvasUpdateRequired || this.p.mouseX !== this.p.pmouseX || this.p.mouseY !== this.p.pmouseY) {
+            this.renderCanvas();
+        }
+
+        return this.canvas;
+    }
+
+    /**
+     * Render canvas from mouse position and grid canvas
+     */
+    renderCanvas() {
         /**
          * @type {p5.Vector} mouse
          */
         let mouse = this.p.createVector(this.p.mouseX - this.position.x, this.p.mouseY - this.position.y);
+        mouse.x = Math.floor(mouse.x / this.cellSize - 0.5) * this.cellSize;
+        mouse.y = Math.floor(mouse.y / this.cellSize - 0.5) * this.cellSize;
 
-        let p1 = this.p.createVector(0, 0);
-        let p2 = this.p.createVector(0, 0);
+        this.canvas.image(this.gridCanvas, 0, 0);
+        this.canvas.fill(255, 120, 0, 120);
+        this.canvas.rect(mouse.x, mouse.y, this.cellSize, this.cellSize);
+
+        this.canvasUpdateRequired = false;
+    }
+
+    /**
+     * Render grid to internal canvas.
+     */
+    renderGrid() {
+        this.gridCanvas.background(240);
 
         for (let w = 0; w < this.printerGridSize.width; w++) {
             for (let h = 0; h < this.printerGridSize.height; h++) {
-
-                /**
-                 * @type {p5.Color} fillColor
-                 */
-                let fillColor = this.printerGrid.getCell(w, h) ? this.p.color(70, 70, 200) : this.p.color(240);
-
-                p1.set(w * this.cellSize, h * this.cellSize);
-                p2.set((w + 1) * this.cellSize, (h + 1) * this.cellSize);
-
-                if (Utils.isInside(mouse, p1, p2)) {
-                    fillColor["levels"][0] = 155;
-                    fillColor["levels"][1] = 155;
+                if(!this.printerGrid.getCellState(w, h)){
+                    continue;
                 }
 
-                this.canvas.fill(fillColor);
-                this.canvas.rect(w * this.cellSize, h * this.cellSize, this.cellSize, this.cellSize);
+                this.gridCanvas.fill(70, 70, 200);
+                this.gridCanvas.rect(w * this.cellSize, h * this.cellSize, this.cellSize, this.cellSize);
             }
         }
 
-        this.updateRequired = false;
-        return this.canvas;
+        this.gridUpdateRequired = false;
+    }
+
+    /**
+     * Update only one cell; no need to re-render whole canvas
+     * @type {Number} x
+     * @type {Number} y
+     */
+    renderCell(x, y) {
+        if(this.printerGrid.getCellState(x, y)) {
+            this.gridCanvas.fill(70, 70, 200);
+        } else {
+            this.gridCanvas.fill(240);
+        }
+
+        this.gridCanvas.rect(x * this.cellSize, y * this.cellSize, this.cellSize, this.cellSize);
+    }
+
+    /**
+     * Get rendered grid object
+     * @return {*}
+     */
+    getRenderedGrid() {
+        if (this.gridUpdateRequired) {
+            this.renderGrid();
+        }
+
+        return this.gridCanvas;
     }
 
     /**
      * @param {p5.Vector} point
      * @param {boolean} state
      */
-    setCellAtPoint(point, state = true){
-        point.x = Math.floor((point.x - this.position.x) / this.cellSize);
-        point.y = Math.floor((point.y - this.position.y )/ this.cellSize);
+    setCellAtPoint(point, state = true) {
+        point.x = Math.floor((point.x - this.position.x) / this.cellSize - 0.5);
+        point.y = Math.floor((point.y - this.position.y) / this.cellSize - 0.5);
 
-        if(!Utils.isInside(point, this.p.createVector(0, 0), this.p.createVector(this.printerGridSize.width, this.printerGridSize.height))){
+        if (!Utils.isInside(point, this.p.createVector(0, 0), this.p.createVector(this.printerGridSize.width, this.printerGridSize.height))) {
             return;
         }
 
-        this.printerGrid.setCell(point.x, point.y, state);
-        this.updateRequired = true;
+        this.printerGrid.setCellState(point.x, point.y, state);
+        this.renderCell(point.x, point. y);
     }
 }

@@ -7,11 +7,13 @@ export default class PrinterGrid {
     size;
 
     /**
+     * Data structure
      * @type {Boolean[][]} grid
      */
     grid;
 
     /**
+     * Create PrinterGrid
      * @param {Number} width
      * @param {Number} height
      */
@@ -20,6 +22,7 @@ export default class PrinterGrid {
     }
 
     /**
+     * Create string from data
      * @returns {string}
      */
     toString() {
@@ -35,6 +38,9 @@ export default class PrinterGrid {
         return output;
     }
 
+    /**
+     * Fill grid with random data
+     */
     random() {
         for (let j = 0; j < this.size.height; j++) {
             for (let i = 0; i < this.size.width; i++) {
@@ -44,15 +50,19 @@ export default class PrinterGrid {
     }
 
     /**
+     * Set grid size
      * @param {Number} width
      * @param {Number} height
      */
     setSize(width, height) {
         this.size = new Dimension(width, height);
-        this.createGridArray();
+        this.createDataStructure();
     }
 
-    createGridArray() {
+    /**
+     * Create grid data structure
+     */
+    createDataStructure() {
         this.grid = new Array(this.size.width);
 
         for (let w = 0; w < this.size.width; ++w) {
@@ -61,6 +71,16 @@ export default class PrinterGrid {
     }
 
     /**
+     * Clear PrinterGrid
+     */
+    clear() {
+        for (let w = 0; w < this.size.width; ++w) {
+            this.grid[w].fill(false);
+        }
+    }
+
+    /**
+     * Get grid size
      * @returns {Dimension}
      */
     getSize() {
@@ -68,20 +88,22 @@ export default class PrinterGrid {
     }
 
     /**
+     * Get cell state
      * @param {Number} x
      * @param {Number} y
      * @returns {Boolean}
      */
-    getCell(x, y) {
+    getCellState(x, y) {
         return this.grid[x][y];
     }
 
     /**
+     * Set cell state
      * @param {Number} x
      * @param {Number} y
      * @param {Boolean} state
      */
-    setCell(x, y, state = true) {
+    setCellState(x, y, state = true) {
         this.grid[x][y] = state;
     }
 }
