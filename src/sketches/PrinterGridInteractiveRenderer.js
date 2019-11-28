@@ -25,6 +25,11 @@ export default class PrinterGridInteractiveRenderer {
     position;
 
     /**
+     * @type {boolean} updateRequired
+     */
+    updateRequired = true;
+
+    /**
      * @param p p5 instance
      * @param {PrinterGrid} printerGrid
      * @param {Number} cellSize
@@ -35,16 +40,20 @@ export default class PrinterGridInteractiveRenderer {
         this.printerGrid = printerGrid;
         this.printerGridSize = this.printerGrid.getSize();
         this.canvas = p.createGraphics(this.printerGridSize.width * cellSize, this.printerGridSize.height * cellSize);
+        this.canvas.noStroke();
         this.cellSize = cellSize;
         this.position = position;
     }
 
     render() {
+        if(!this.updateRequired){
+            return this.canvas;
+        }
+
         /**
          * @type {p5.Vector} mouse
          */
         let mouse = this.p.createVector(this.p.mouseX - this.position.x, this.p.mouseY - this.position.y);
-        this.canvas.stroke(255);
 
         let p1 = this.p.createVector(0, 0);
         let p2 = this.p.createVector(0, 0);
@@ -55,13 +64,14 @@ export default class PrinterGridInteractiveRenderer {
                 /**
                  * @type {p5.Color} fillColor
                  */
-                let fillColor = this.printerGrid.getCell(w, h) ? this.p.color(0) : this.p.color(255);
+                let fillColor = this.printerGrid.getCell(w, h) ? this.p.color(70, 70, 200) : this.p.color(240);
 
                 p1.set(w * this.cellSize, h * this.cellSize);
                 p2.set((w + 1) * this.cellSize, (h + 1) * this.cellSize);
 
                 if (Utils.isInside(mouse, p1, p2)) {
-                    fillColor["levels"][1] = 125;
+                    fillColor["levels"][0] = 155;
+                    fillColor["levels"][1] = 155;
                 }
 
                 this.canvas.fill(fillColor);
@@ -69,6 +79,7 @@ export default class PrinterGridInteractiveRenderer {
             }
         }
 
+        this.updateRequired = false;
         return this.canvas;
     }
 
@@ -77,13 +88,14 @@ export default class PrinterGridInteractiveRenderer {
      * @param {boolean} state
      */
     setCellAtPoint(point, state = true){
-        point.x = Math.floor(point.x / this.cellSize);
-        point.y = Math.floor(point.y / this.cellSize);
+        point.x = Math.floor((point.x - this.position.x) / this.cellSize);
+        point.y = Math.floor((point.y - this.position.y )/ this.cellSize);
 
         if(!Utils.isInside(point, this.p.createVector(0, 0), this.p.createVector(this.printerGridSize.width, this.printerGridSize.height))){
             return;
         }
 
         this.printerGrid.setCell(point.x, point.y, state);
+        this.updateRequired = true;
     }
 }

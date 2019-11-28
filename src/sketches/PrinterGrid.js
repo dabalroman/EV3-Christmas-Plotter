@@ -35,6 +35,14 @@ export default class PrinterGrid {
         return output;
     }
 
+    random() {
+        for (let j = 0; j < this.size.height; j++) {
+            for (let i = 0; i < this.size.width; i++) {
+                this.grid[i][j] = (Math.random() * 2) >= 1;
+            }
+        }
+    }
+
     /**
      * @param {Number} width
      * @param {Number} height
