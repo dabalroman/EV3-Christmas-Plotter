@@ -1,6 +1,7 @@
 import Dimension from "./Dimension";
+import PlotterCodeGenerator from "./PlotterCodeGenerator";
 
-export default class PrinterGrid {
+export default class PlotterGrid {
     /**
      * @type {Dimension} size
      */
@@ -13,12 +14,19 @@ export default class PrinterGrid {
     grid;
 
     /**
-     * Create PrinterGrid
+     * @type {plotterCodeGenerator} plotterCodeGenerator
+     */
+    plotterCodeGenerator;
+
+    /**
+     * Create PlotterGrid
      * @param {Number} width
      * @param {Number} height
      */
     constructor(width, height) {
         this.setSize(width, height);
+
+        this.plotterCodeGenerator = new PlotterCodeGenerator();
     }
 
     /**
@@ -70,8 +78,12 @@ export default class PrinterGrid {
         }
     }
 
+    generatePlotterCode(){
+        this.plotterCodeGenerator.generateCode(this.grid);
+    }
+
     /**
-     * Clear PrinterGrid
+     * Clear PlotterGrid
      */
     clear() {
         for (let w = 0; w < this.size.width; ++w) {

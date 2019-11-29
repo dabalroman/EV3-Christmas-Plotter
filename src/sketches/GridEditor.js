@@ -1,17 +1,17 @@
-import PrinterGrid from "./PrinterGrid";
-import PrinterGridInteractiveRenderer from "./PrinterGridInteractiveRenderer";
+import PlotterGrid from "./PlotterGrid";
+import PlotterGridInteractiveRenderer from "./PlotterGridInteractiveRenderer";
 import SphereRenderer from "./SphereRenderer";
 
 export default function GridEditor(p) {
     /**
-     * @type {PrinterGrid} printerGrid
+     * @type {PlotterGrid} plotterGrid
      */
-    let printerGrid;
+    let plotterGrid;
 
     /**
-     * @type {PrinterGridInteractiveRenderer} printerGridRenderer
+     * @type {PlotterGridInteractiveRenderer} plotterGridRenderer
      */
-    let printerGridRenderer;
+    let plotterGridRenderer;
 
     /**
      * @type {SphereRenderer} sphereRenderer
@@ -28,17 +28,32 @@ export default function GridEditor(p) {
         p.createCanvas(960, 460);
         p.frameRate(30);
 
-        printerGrid = new PrinterGrid(120, 19);
-        printerGrid.random();
+        plotterGrid = new PlotterGrid(120, 19);
+        plotterGrid.setCellState(1, 0);
+        plotterGrid.setCellState(2, 0);
+        plotterGrid.setCellState(3, 0);
+        plotterGrid.setCellState(7, 0);
+        plotterGrid.setCellState(8, 0);
+        plotterGrid.setCellState(9, 0);
+        plotterGrid.setCellState(13, 0);
+        plotterGrid.setCellState(14, 0);
+        plotterGrid.setCellState(3, 1);
+        plotterGrid.setCellState(4, 1);
+        plotterGrid.setCellState(5, 1);
+        plotterGrid.setCellState(9, 1);
+        plotterGrid.setCellState(12, 1);
+        plotterGrid.setCellState(13, 1);
 
-        printerGridRenderer = new PrinterGridInteractiveRenderer(p, printerGrid, 8, p.createVector(0, 300));
-        sphereRenderer = new SphereRenderer(p, printerGridRenderer.getRenderedGrid());
+        plotterGrid.generatePlotterCode();
+
+        plotterGridRenderer = new PlotterGridInteractiveRenderer(p, plotterGrid, 8, p.createVector(0, 300));
+        sphereRenderer = new SphereRenderer(p, plotterGridRenderer.getRenderedGrid());
 
         lastClickVector = p.createVector(0, 0);
     };
 
     p.draw = () => {
-        p.image(printerGridRenderer.render(), 0, 300);
+        p.image(plotterGridRenderer.render(), 0, 300);
         p.image(sphereRenderer.render(), 660, 0);
     };
 
@@ -50,7 +65,7 @@ export default function GridEditor(p) {
         lastClickVector.x = p.mouseX;
         lastClickVector.y = p.mouseY;
 
-        printerGridRenderer.setCellAtPoint(lastClickVector, p.mouseButton === p.LEFT);
+        plotterGridRenderer.setCellAtPoint(lastClickVector, p.mouseButton === p.LEFT);
     };
 
     p.myCustomRedrawAccordingToNewPropsHandler = (newProps) => {
