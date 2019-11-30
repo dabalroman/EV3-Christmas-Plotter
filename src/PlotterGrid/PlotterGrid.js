@@ -1,5 +1,5 @@
-import Dimension from "./Dimension";
-import PlotterCodeGenerator from "./PlotterCodeGenerator";
+import Dimension from "../Utils/Dimension";
+import CodeGenHorizVertPoint from "./CodeGenerators/CodeGenHorizVertPoint";
 
 export default class PlotterGrid {
     /**
@@ -14,7 +14,7 @@ export default class PlotterGrid {
     grid;
 
     /**
-     * @type {PlotterCodeGenerator} plotterCodeGenerator
+     * @type {CodeGenerator} plotterCodeGenerator
      */
     plotterCodeGenerator;
 
@@ -47,7 +47,7 @@ export default class PlotterGrid {
         this.setCellState(0, 29);
         this.setCellState(119, 29);
 
-        this.plotterCodeGenerator = new PlotterCodeGenerator();
+        this.plotterCodeGenerator = new CodeGenHorizVertPoint();
     }
 
     /**
@@ -99,7 +99,7 @@ export default class PlotterGrid {
         }
     }
 
-    generatePlotterCode(){
+    generatePlotterCode() {
         this.plotterCodeGenerator.generateCode(this.grid);
     }
 
