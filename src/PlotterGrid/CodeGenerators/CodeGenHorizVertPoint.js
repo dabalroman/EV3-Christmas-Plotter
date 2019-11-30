@@ -2,6 +2,8 @@ import CodeGenerator from "./CodeGenerator";
 
 export default class CodeGenHorizVertPoint extends CodeGenerator {
     generateCode(plotterGrid: Boolean[][]) {
+        this.code = [];
+
         this.code.push(CodeGenHorizVertPoint.INS_START);
         this.code.push(CodeGenHorizVertPoint.INS_PEN_UP);
 
