@@ -1,41 +1,51 @@
-export default class SphereRenderer{
-    p;
-    canvas;
-    texture;
-    renderedPrinterGrid;
+export default function SphereRenderer(p) {
+    let renderedPlotterGrid = null;
+    let texture = null;
 
     /**
      * @type {Number}
      */
-    lastTextureUpdateFrame = 0;
+    let lastTextureUpdateFrame = 0;
 
-    constructor(p, renderedPrinterGrid){
-        this.p = p;
+    /**
+     * @type {Number}
+     */
+    let height = 0;
 
-        this.canvas = p.createGraphics(300, 300, p.WEBGL);
-        this.canvas.noStroke();
-        this.canvas.smooth();
-        this.canvas.fill(255, 0, 255);
+    /**
+     * @type {Number}
+     */
+    let width = 0;
 
-        this.texture = p.createGraphics(600, 300);
+    p.setup = () => {
+        p.setAttributes('antialias', true);
+        p.createCanvas(width, height, p.WEBGL);
+        p.frameRate(30);
 
-        this.renderedPrinterGrid = renderedPrinterGrid;
-    }
+        p.noStroke();
+        p.smooth();
 
-    render(){
-        //Update texture every second
-        if(this.p.frameCount - this.lastTextureUpdateFrame >= 3){
-            this.texture.background(240);
-            this.texture.image(this.renderedPrinterGrid, 0, 100, 600, 100);
+        texture = p.createGraphics(960, 720);
+    };
 
-            this.lastTextureUpdateFrame = this.p.frameCount;
+    p.draw = () => {
+
+        if (p.frameCount - lastTextureUpdateFrame >= 3) {
+            texture.background(240);
+            texture.image(renderedPlotterGrid.graphics, 0, 240);
+
+            lastTextureUpdateFrame = p.frameCount;
         }
 
-        this.canvas.background(255);
-        this.canvas.rotateY(0.01);
-        this.canvas.texture(this.texture);
-        this.canvas.sphere(120, 16, 16);
+        p.background(255);
+        p.rotateY(p.millis() / 5000);
+        p.texture(texture);
+        p.sphere(120, 16, 16);
+    };
 
-        return this.canvas;
-    }
+    p.myCustomRedrawAccordingToNewPropsHandler = (props) => {
+        height = props.height;
+        width = props.width;
+        renderedPlotterGrid = props.renderedPlotterGrid();
+    };
 }

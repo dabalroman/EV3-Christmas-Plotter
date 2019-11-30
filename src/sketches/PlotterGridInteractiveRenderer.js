@@ -93,7 +93,7 @@ export default class PlotterGridInteractiveRenderer {
 
         for (let w = 0; w < this.plotterGridSize.width; w++) {
             for (let h = 0; h < this.plotterGridSize.height; h++) {
-                if(!this.plotterGrid.getCellState(w, h)){
+                if (!this.plotterGrid.getCellState(w, h)) {
                     continue;
                 }
 
@@ -111,7 +111,7 @@ export default class PlotterGridInteractiveRenderer {
      * @type {Number} y
      */
     renderCell(x, y) {
-        if(this.plotterGrid.getCellState(x, y)) {
+        if (this.plotterGrid.getCellState(x, y)) {
             this.gridCanvas.fill(70, 70, 200);
         } else {
             this.gridCanvas.fill(240);
@@ -145,6 +145,6 @@ export default class PlotterGridInteractiveRenderer {
         }
 
         this.plotterGrid.setCellState(point.x, point.y, state);
-        this.renderCell(point.x, point. y);
+        this.renderCell(point.x, point.y);
     }
 }

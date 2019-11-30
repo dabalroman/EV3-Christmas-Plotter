@@ -1,22 +1,22 @@
-import PlotterGrid from "./PlotterGrid";
 import PlotterGridInteractiveRenderer from "./PlotterGridInteractiveRenderer";
-import SphereRenderer from "./SphereRenderer";
 
 export default function GridEditor(p) {
+    let renderedPlotterGrid = null;
+
     /**
      * @type {PlotterGrid} plotterGrid
      */
-    let plotterGrid;
+    let plotterGrid = null;
 
     /**
-     * @type {PlotterGridInteractiveRenderer} plotterGridRenderer
+     * @type {PlotterGridInteractiveRenderer} plotterGridInteractiveRenderer
      */
-    let plotterGridRenderer;
+    let plotterGridInteractiveRenderer = null;
 
     /**
-     * @type {SphereRenderer} sphereRenderer
+     * @type {Number} cellSize
      */
-    let sphereRenderer;
+    let cellSize = 8;
 
     /**
      * @type {p5.Vector} lastClickVector
@@ -25,36 +25,17 @@ export default function GridEditor(p) {
 
     p.setup = () => {
         p.setAttributes('antialias', true);
-        p.createCanvas(960, 460);
+        p.createCanvas(plotterGrid.getSize().width * cellSize, plotterGrid.getSize().height * cellSize);
         p.frameRate(30);
 
-        plotterGrid = new PlotterGrid(120, 19);
-        plotterGrid.setCellState(1, 0);
-        plotterGrid.setCellState(2, 0);
-        plotterGrid.setCellState(3, 0);
-        plotterGrid.setCellState(7, 0);
-        plotterGrid.setCellState(8, 0);
-        plotterGrid.setCellState(9, 0);
-        plotterGrid.setCellState(13, 0);
-        plotterGrid.setCellState(14, 0);
-        plotterGrid.setCellState(3, 1);
-        plotterGrid.setCellState(4, 1);
-        plotterGrid.setCellState(5, 1);
-        plotterGrid.setCellState(9, 1);
-        plotterGrid.setCellState(12, 1);
-        plotterGrid.setCellState(13, 1);
-
-        plotterGrid.generatePlotterCode();
-
-        plotterGridRenderer = new PlotterGridInteractiveRenderer(p, plotterGrid, 8, p.createVector(0, 300));
-        sphereRenderer = new SphereRenderer(p, plotterGridRenderer.getRenderedGrid());
+        plotterGridInteractiveRenderer = new PlotterGridInteractiveRenderer(p, plotterGrid, cellSize, p.createVector(0, 0));
 
         lastClickVector = p.createVector(0, 0);
     };
 
     p.draw = () => {
-        p.image(plotterGridRenderer.render(), 0, 300);
-        p.image(sphereRenderer.render(), 660, 0);
+        p.image(plotterGridInteractiveRenderer.render(), 0, 0);
+        renderedPlotterGrid.graphics = plotterGridInteractiveRenderer.getRenderedGrid();
     };
 
     p.mouseDragged = () => {
@@ -65,10 +46,12 @@ export default function GridEditor(p) {
         lastClickVector.x = p.mouseX;
         lastClickVector.y = p.mouseY;
 
-        plotterGridRenderer.setCellAtPoint(lastClickVector, p.mouseButton === p.LEFT);
+        plotterGridInteractiveRenderer.setCellAtPoint(lastClickVector, p.mouseButton === p.LEFT);
     };
 
-    p.myCustomRedrawAccordingToNewPropsHandler = (newProps) => {
-
-    }
+    p.myCustomRedrawAccordingToNewPropsHandler = (props) => {
+        plotterGrid = props.plotterGrid();
+        renderedPlotterGrid = props.renderedPlotterGrid();
+        cellSize = props.cellSize;
+    };
 };

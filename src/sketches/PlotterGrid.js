@@ -14,7 +14,7 @@ export default class PlotterGrid {
     grid;
 
     /**
-     * @type {plotterCodeGenerator} plotterCodeGenerator
+     * @type {PlotterCodeGenerator} plotterCodeGenerator
      */
     plotterCodeGenerator;
 
@@ -25,6 +25,27 @@ export default class PlotterGrid {
      */
     constructor(width, height) {
         this.setSize(width, height);
+
+        this.setCellState(1, 0);
+        this.setCellState(2, 0);
+        this.setCellState(3, 0);
+        this.setCellState(7, 0);
+        this.setCellState(8, 0);
+        this.setCellState(9, 0);
+        this.setCellState(13, 0);
+        this.setCellState(14, 0);
+        this.setCellState(3, 1);
+        this.setCellState(4, 1);
+        this.setCellState(5, 1);
+        this.setCellState(9, 1);
+        this.setCellState(12, 1);
+        this.setCellState(13, 1);
+
+        //Control points
+        this.setCellState(0, 0);
+        this.setCellState(119, 0);
+        this.setCellState(0, 29);
+        this.setCellState(119, 29);
 
         this.plotterCodeGenerator = new PlotterCodeGenerator();
     }
