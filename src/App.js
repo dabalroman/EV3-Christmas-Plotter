@@ -2,10 +2,10 @@ import React, {Component} from 'react';
 import P5Wrapper from 'react-p5-wrapper';
 import './App.css';
 
-import GridEditor from "./sketches/GridEditor";
-import GridEditorStyles from "./sketches/GridEditor.module.css";
-import PlotterGrid from "./sketches/PlotterGrid";
-import SphereRenderer from "./sketches/SphereRenderer";
+import GridEditor from "./P5Sketches/GridEditor";
+import GridEditorStyles from "./P5Sketches/GridEditor.module.css";
+import PlotterGrid from "./PlotterGrid/PlotterGrid";
+import SphereRenderer from "./P5Sketches/SphereRenderer";
 
 class App extends Component {
     /**

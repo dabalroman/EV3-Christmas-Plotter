@@ -1,4 +1,4 @@
-import Utils from "./Utils";
+import Utils from "../Utils/Utils";
 
 export default class PlotterGridInteractiveRenderer {
     p;
@@ -75,8 +75,8 @@ export default class PlotterGridInteractiveRenderer {
          * @type {p5.Vector} mouse
          */
         let mouse = this.p.createVector(this.p.mouseX - this.position.x, this.p.mouseY - this.position.y);
-        mouse.x = Math.floor(mouse.x / this.cellSize - 0.5) * this.cellSize;
-        mouse.y = Math.floor(mouse.y / this.cellSize - 0.5) * this.cellSize;
+        mouse.x = Math.floor(mouse.x / this.cellSize) * this.cellSize;
+        mouse.y = Math.floor(mouse.y / this.cellSize) * this.cellSize;
 
         this.canvas.image(this.gridCanvas, 0, 0);
         this.canvas.fill(255, 120, 0, 120);
@@ -118,6 +118,7 @@ export default class PlotterGridInteractiveRenderer {
         }
 
         this.gridCanvas.rect(x * this.cellSize, y * this.cellSize, this.cellSize, this.cellSize);
+        this.canvasUpdateRequired = true;
     }
 
     /**
@@ -137,8 +138,8 @@ export default class PlotterGridInteractiveRenderer {
      * @param {boolean} state
      */
     setCellAtPoint(point, state = true) {
-        point.x = Math.floor((point.x - this.position.x) / this.cellSize - 0.5);
-        point.y = Math.floor((point.y - this.position.y) / this.cellSize - 0.5);
+        point.x = Math.floor((point.x - this.position.x) / this.cellSize);
+        point.y = Math.floor((point.y - this.position.y) / this.cellSize);
 
         if (!Utils.isInside(point, this.p.createVector(0, 0), this.p.createVector(this.plotterGridSize.width, this.plotterGridSize.height))) {
             return;
