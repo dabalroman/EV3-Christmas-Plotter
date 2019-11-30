@@ -10,7 +10,7 @@ export default class CodeGenHorizVertPoint extends CodeGenerator {
         let points = this.findPoints(plotterGrid);
 
         this.generateCodeForHorizontalLines(horizontalLines);
-        this.generateCodeForVerticalLines(verticalLines);
+        this.generateCodeForVerticalLines(verticalLines, horizontalLines);
         this.generateCodeForPoints(points);
 
         this.code.push(CodeGenHorizVertPoint.INS_DONE);
@@ -24,67 +24,94 @@ export default class CodeGenHorizVertPoint extends CodeGenerator {
 
         this.code.push(CodeGenHorizVertPoint.INS_RST_VERTICAL);
 
-        horizontalLines.forEach(e => {
+        horizontalLines.forEach(horizontalLine => {
             //Move to next row if necessary
             //noinspection DuplicatedCode
-            if (pos.y !== e.y1) {
+            if (pos.y !== horizontalLine.y1) {
                 if (pos.x !== 0) {
                     this.code.push(CodeGenHorizVertPoint.INS_RST_HORIZONTAL);
                 }
                 this.code.push(CodeGenHorizVertPoint.INS_MOV_DOWN);
-                this.code.push(e.y1 - pos.y);
+                this.code.push(horizontalLine.y1 - pos.y);
                 pos.x = 0;
-                pos.y = e.y1;
+                pos.y = horizontalLine.y1;
             }
 
             //Move to start of new line
-            if (pos.x !== e.x1) {
+            if (pos.x !== horizontalLine.x1) {
                 this.code.push(CodeGenHorizVertPoint.INS_MOV_RIGHT);
-                this.code.push(e.x1 - pos.x);
-                pos.x = e.x1;
+                this.code.push(horizontalLine.x1 - pos.x);
+                pos.x = horizontalLine.x1;
             }
 
             //Draw line
             this.code.push(CodeGenHorizVertPoint.INS_PEN_DOWN);
             this.code.push(CodeGenHorizVertPoint.INS_MOV_RIGHT);
-            this.code.push(e.x2 - pos.x);
+            this.code.push(horizontalLine.x2 - pos.x);
             this.code.push(CodeGenHorizVertPoint.INS_PEN_UP);
-            pos.x = e.x2;
+            pos.x = horizontalLine.x2;
         });
     }
 
-    generateCodeForVerticalLines(verticalLines) {
+    generateCodeForVerticalLines(verticalLines, horizontalLines) {
         let pos = {x: 0, y: 0};
 
         this.code.push(CodeGenHorizVertPoint.INS_RST_HORIZONTAL);
 
-        verticalLines.forEach(e => {
+        for (let i = 0; i < verticalLines.length; i++) {
+            let verticalLine = verticalLines[i];
+            let lineAlreadyDrawn = true;
+
+            //Check if the lines are already drawn by searching for each pixel in horizontal lines
+            for (let y = verticalLine.y1; y <= verticalLine.y2; y++) {
+                let pixelFound = false;
+
+                //Look in every horizontal line for that pixel
+                for (let j = 0; j < horizontalLines.length; j++) {
+                    let horizontalLine = horizontalLines[j];
+
+                    if (horizontalLine.y1 === y && horizontalLine.x1 <= verticalLine.x1 && horizontalLine.x2 >= verticalLine.x1) {
+                        pixelFound = true;
+                        break;
+                    }
+                }
+
+                if (!pixelFound) {
+                    lineAlreadyDrawn = false;
+                    break;
+                }
+            }
+
+            if (lineAlreadyDrawn) {
+                continue;
+            }
+
             //Move to next column if necessary
             //noinspection DuplicatedCode
-            if (pos.x !== e.x1) {
+            if (pos.x !== verticalLine.x1) {
                 if (pos.y !== 0) {
                     this.code.push(CodeGenHorizVertPoint.INS_RST_VERTICAL);
                 }
                 this.code.push(CodeGenHorizVertPoint.INS_MOV_RIGHT);
-                this.code.push(e.x1 - pos.x);
-                pos.x = e.x1;
+                this.code.push(verticalLine.x1 - pos.x);
+                pos.x = verticalLine.x1;
                 pos.y = 0;
             }
 
             //Move to start of new line
-            if (pos.y !== e.y1) {
+            if (pos.y !== verticalLine.y1) {
                 this.code.push(CodeGenHorizVertPoint.INS_MOV_DOWN);
-                this.code.push(e.y1 - pos.y);
-                pos.y = e.y1;
+                this.code.push(verticalLine.y1 - pos.y);
+                pos.y = verticalLine.y1;
             }
 
             //Draw line
             this.code.push(CodeGenHorizVertPoint.INS_PEN_DOWN);
             this.code.push(CodeGenHorizVertPoint.INS_MOV_DOWN);
-            this.code.push(e.y2 - pos.y);
+            this.code.push(verticalLine.y2 - pos.y);
             this.code.push(CodeGenHorizVertPoint.INS_PEN_UP);
-            pos.y = e.y2;
-        });
+            pos.y = verticalLine.y2;
+        }
     }
 
     generateCodeForPoints(points) {
@@ -92,30 +119,30 @@ export default class CodeGenHorizVertPoint extends CodeGenerator {
 
         this.code.push(CodeGenHorizVertPoint.INS_RST_HORIZONTAL);
 
-        points.forEach(e => {
+        points.forEach(point => {
             //Move to next column if necessary
             //noinspection DuplicatedCode
-            if (pos.x !== e.x) {
+            if (pos.x !== point.x) {
                 if (pos.y !== 0) {
                     this.code.push(CodeGenHorizVertPoint.INS_RST_VERTICAL);
                 }
                 this.code.push(CodeGenHorizVertPoint.INS_MOV_RIGHT);
-                this.code.push(e.x - pos.x);
-                pos.x = e.x;
+                this.code.push(point.x - pos.x);
+                pos.x = point.x;
                 pos.y = 0;
             }
 
             //Move to start of new line
-            if (pos.y !== e.y) {
+            if (pos.y !== point.y) {
                 this.code.push(CodeGenHorizVertPoint.INS_MOV_DOWN);
-                this.code.push(e.y - pos.y);
-                pos.y = e.y;
+                this.code.push(point.y - pos.y);
+                pos.y = point.y;
             }
 
             //Draw line
             this.code.push(CodeGenHorizVertPoint.INS_PEN_DOWN);
             this.code.push(CodeGenHorizVertPoint.INS_PEN_UP);
-            pos.y = e.y;
+            pos.y = point.y;
         });
     }
 
