@@ -1,13 +1,17 @@
 import React, {Component} from 'react';
 import P5Wrapper from 'react-p5-wrapper';
-import './App.css';
 
-import GridEditor from "./P5Sketches/GridEditor";
-import GridEditorStyles from "./P5Sketches/GridEditor.module.css";
+import GridEditorP5 from "./GridEditor/GridEditor.p5";
+import GridEditorStyles from "./GridEditor/GridEditor.module.css";
 import PlotterGrid from "./PlotterGrid/PlotterGrid";
-import SphereRenderer from "./P5Sketches/SphereRenderer";
+import SphereRendererP5 from "./GridEditor/SphereRenderer.p5";
 
 class App extends Component {
+    state = {
+        visualCodeDecoderUpdateNeeded: false,
+        enableSphereRotation: true,
+    }
+
     /**
      * @type {PlotterGrid}
      */
@@ -20,6 +24,7 @@ class App extends Component {
         this.plotterGrid = new PlotterGrid(120, 30);
         this.getPlotterGrid = this.getPlotterGrid.bind(this);
         this.getRenderedPlotterGrid = this.getRenderedPlotterGrid.bind(this);
+        this.isVisualCodeDecoderUpdateNeeded = this.isVisualCodeDecoderUpdateNeeded.bind(this);
     }
 
     /**
@@ -30,9 +35,25 @@ class App extends Component {
         return this.plotterGrid;
     }
 
+    /**
+     * A way to provide realtime data to p5.js sketches without state changing
+     */
     getRenderedPlotterGrid() {
         return this.renderedPlotterGrid;
     }
+
+    isVisualCodeDecoderUpdateNeeded() {
+        let currentVCDUNState = this.state.visualCodeDecoderUpdateNeeded;
+
+        if (currentVCDUNState !== false) {
+            this.setState({
+                visualCodeDecoderUpdateNeeded: false
+            });
+        }
+
+        return currentVCDUNState;
+    }
+
 
     render() {
         return (
@@ -40,13 +61,16 @@ class App extends Component {
                 e.preventDefault();
             }}>
                 <P5Wrapper
-                    sketch={GridEditor}
+                    sketch={GridEditorP5}
                     plotterGrid={this.getPlotterGrid}
                     renderedPlotterGrid={this.getRenderedPlotterGrid}
-                    cellSize={8}/>
+                    cellSize={8}
+                    isVisualCodeDecoderUpdateNeeded={this.isVisualCodeDecoderUpdateNeeded}
+                />
                 <P5Wrapper
-                    sketch={SphereRenderer}
+                    sketch={SphereRendererP5}
                     renderedPlotterGrid={this.getRenderedPlotterGrid}
+                    enableRotation={this.state.enableSphereRotation}
                     width={300}
                     height={300}
                 />
@@ -57,9 +81,27 @@ class App extends Component {
                     Log plotter grid
                 </button>
                 <button onClick={() => {
-                    this.plotterGrid.generatePlotterCode()
+                    this.plotterGrid.generatePlotterCode(PlotterGrid.GEN_LBL);
+                    this.setState({
+                        visualCodeDecoderUpdateNeeded: true
+                    });
                 }}>
-                    Generate code
+                    Generate LBL code
+                </button>
+                <button onClick={() => {
+                    this.plotterGrid.generatePlotterCode(PlotterGrid.GEN_HVP);
+                    this.setState({
+                        visualCodeDecoderUpdateNeeded: true
+                    });
+                }}>
+                    Generate HVP code
+                </button>
+                <button onClick={() => {
+                    this.setState({
+                        enableSphereRotation: !this.state.enableSphereRotation
+                    });
+                }}>
+                    Toggle sphere rotation
                 </button>
             </div>
         );

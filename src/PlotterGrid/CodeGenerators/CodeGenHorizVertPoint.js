@@ -17,7 +17,6 @@ export default class CodeGenHorizVertPoint extends CodeGenerator {
 
         this.code.push(CodeGenHorizVertPoint.INS_DONE);
 
-        console.log(this.code);
         return this.code;
     }
 
@@ -171,7 +170,6 @@ export default class CodeGenHorizVertPoint extends CodeGenerator {
             }
         }
 
-        console.log(verticalLines);
         return verticalLines;
     }
 
@@ -198,7 +196,6 @@ export default class CodeGenHorizVertPoint extends CodeGenerator {
             }
         }
 
-        console.log(horizontalLines);
         return horizontalLines;
     }
 
@@ -238,7 +235,6 @@ export default class CodeGenHorizVertPoint extends CodeGenerator {
             }
         }
 
-        console.log(points);
         return points;
     }
 }

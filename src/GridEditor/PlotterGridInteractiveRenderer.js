@@ -11,7 +11,7 @@ export default class PlotterGridInteractiveRenderer {
     plotterGrid;
 
     /**
-     * @type {Dimension} plotterGridSize
+     * @type {Dimension} gridSize
      */
     plotterGridSize;
 

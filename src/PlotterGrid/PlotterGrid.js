@@ -1,7 +1,11 @@
 import Dimension from "../Utils/Dimension";
+import CodeGenLineByLineHoriz from "./CodeGenerators/CodeGenLineByLineHoriz";
 import CodeGenHorizVertPoint from "./CodeGenerators/CodeGenHorizVertPoint";
 
 export default class PlotterGrid {
+    static GEN_LBL = 0;
+    static GEN_HVP = 1;
+
     /**
      * @type {Dimension} size
      */
@@ -14,9 +18,10 @@ export default class PlotterGrid {
     grid;
 
     /**
-     * @type {CodeGenerator} plotterCodeGenerator
+     * Generated plotter code
+     * @type {Number[]}
      */
-    plotterCodeGenerator;
+    plotterCode;
 
     /**
      * Create PlotterGrid
@@ -46,8 +51,6 @@ export default class PlotterGrid {
         this.setCellState(119, 0);
         this.setCellState(0, 29);
         this.setCellState(119, 29);
-
-        this.plotterCodeGenerator = new CodeGenHorizVertPoint();
     }
 
     /**
@@ -99,8 +102,26 @@ export default class PlotterGrid {
         }
     }
 
-    generatePlotterCode() {
-        this.plotterCodeGenerator.generateCode(this.grid);
+    /**
+     * Encode grid as plotter code
+     * @param type
+     */
+    generatePlotterCode(type) {
+        let plotterCodeGenerator;
+
+        switch (type) {
+            default:
+            case PlotterGrid.GEN_LBL:
+                plotterCodeGenerator = new CodeGenLineByLineHoriz();
+                break;
+
+            case PlotterGrid.GEN_HVP:
+                plotterCodeGenerator = new CodeGenHorizVertPoint();
+                break;
+        }
+
+        this.plotterCode = plotterCodeGenerator.generateCode(this.grid);
+        console.log(this.plotterCode);
     }
 
     /**

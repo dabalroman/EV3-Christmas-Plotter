@@ -1,21 +1,31 @@
-export default function SphereRenderer(p) {
+export default function SphereRendererP5(p) {
     let renderedPlotterGrid = null;
     let texture = null;
 
     /**
-     * @type {Number}
+     * @type {number}
      */
     let lastTextureUpdateFrame = 0;
 
     /**
-     * @type {Number}
+     * @type {number}
      */
     let height = 0;
 
     /**
-     * @type {Number}
+     * @type {number}
      */
     let width = 0;
+
+    /**
+     * @type {boolean}
+     */
+    let enableRotation = true;
+
+    /**
+     * @type {number}
+     */
+    let currentRotation = 0;
 
     p.setup = () => {
         p.setAttributes('antialias', true);
@@ -30,6 +40,8 @@ export default function SphereRenderer(p) {
 
     p.draw = () => {
 
+        p.orbitControl(2, 2, 2);
+
         if (p.frameCount - lastTextureUpdateFrame >= 3) {
             texture.background(240);
             texture.image(renderedPlotterGrid.graphics, 0, 240);
@@ -37,8 +49,11 @@ export default function SphereRenderer(p) {
             lastTextureUpdateFrame = p.frameCount;
         }
 
-        p.background(255);
-        p.rotateY(p.millis() / 5000);
+        if (enableRotation) {
+            currentRotation += 0.01;
+        }
+
+        p.rotateY(currentRotation);
         p.texture(texture);
         p.sphere(120, 16, 16);
     };
@@ -46,6 +61,7 @@ export default function SphereRenderer(p) {
     p.myCustomRedrawAccordingToNewPropsHandler = (props) => {
         height = props.height;
         width = props.width;
+        enableRotation = props.enableRotation;
         renderedPlotterGrid = props.renderedPlotterGrid();
     };
 }
