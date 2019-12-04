@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import P5Wrapper from 'react-p5-wrapper';
 
+import Classes from './App.module.css';
+
 import GridEditorP5 from "./GridEditor/GridEditor.p5";
 import GridEditorStyles from "./GridEditor/GridEditor.module.css";
 import PlotterGrid from "./PlotterGrid/PlotterGrid";
@@ -9,7 +11,7 @@ import SphereRendererP5 from "./GridEditor/SphereRenderer.p5";
 class App extends Component {
     state = {
         visualCodeDecoderUpdateNeeded: false,
-        visualCodeDecoderStep: 0,
+        visualCodeDecoderStep: 50,
         enableSphereRotation: true,
     };
 
@@ -98,23 +100,30 @@ class App extends Component {
                 }}>
                     Generate HVP code
                 </button>
-                <button onClick={() => {
-                    this.setState({
-                        visualCodeDecoderUpdateNeeded: true,
-                        visualCodeDecoderStep: this.state.visualCodeDecoderStep + 1
-                    });
-                }}>
-                    +
-                </button>
-                <span> Step {this.state.visualCodeDecoderStep} </span>
-                <button onClick={() => {
-                    this.setState({
-                        visualCodeDecoderUpdateNeeded: true,
-                        visualCodeDecoderStep: this.state.visualCodeDecoderStep - 1
-                    });
-                }}>
-                    -
-                </button>
+                <div className={Classes.debuggerControls}>
+                    <button onClick={() => {
+                        this.setState({
+                            visualCodeDecoderUpdateNeeded: true,
+                            visualCodeDecoderStep: this.state.visualCodeDecoderStep + 1
+                        });
+                    }}>
+                        +
+                    </button>
+                    <span onWheel={(e) => {
+                        this.setState({
+                            visualCodeDecoderUpdateNeeded: true,
+                            visualCodeDecoderStep: this.state.visualCodeDecoderStep - e.deltaY / 100
+                        });
+                    }}> Step {this.state.visualCodeDecoderStep} </span>
+                    <button onClick={() => {
+                        this.setState({
+                            visualCodeDecoderUpdateNeeded: true,
+                            visualCodeDecoderStep: this.state.visualCodeDecoderStep - 1
+                        });
+                    }}>
+                        -
+                    </button>
+                </div>
                 <button onClick={() => {
                     this.setState({
                         enableSphereRotation: !this.state.enableSphereRotation

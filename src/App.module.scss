@@ -1,0 +1,22 @@
+.debuggerControls {
+    padding: 5px;
+    background: #81d8ff;
+    width: max-content;
+
+    button {
+        background: #2196F3;
+        color: #fff;
+        padding: 5px;
+        margin: 5px;
+        width: 30px;
+        height: 30px;
+        border: none;
+        border-bottom: 4px solid #175da2;
+        cursor: pointer;
+
+        &:hover {
+            background: #f3bb32;
+            border-bottom: 4px solid #a28c20;
+        }
+    }
+}
