@@ -141,6 +141,43 @@ export default class VisualCodeDecoder {
         this.canvas.fill(0);
         this.canvas.noStroke();
         this.canvas.text("Step " + step + "/" + code.length, 10, 230);
-        this.canvas.text("Instruction: " + lIns + " / " + lArg, 10, 220);
+        this.canvas.text("Instruction: " + lIns + " / " + lArg, 10, 210);
+        this.canvas.text("Path length: " + this.countPathLength(code, step), 100, 230);
+    }
+
+    countPathLength(code: number[], step: number): number {
+        let pathLength = 0;
+        let x = 0, y = 0, temp = 0;
+
+        for (let i = 0; i < step; i++) {
+            switch (code[i]) {
+                case CodeGenerator.INS_MOV_RIGHT:
+                    temp = code[++i] / PlotterGrid.EDITOR_TO_PLOTTER_RATIO;
+                    pathLength += temp;
+                    x += temp;
+                    break;
+
+                case CodeGenerator.INS_MOV_DOWN:
+                    temp = code[++i] / PlotterGrid.EDITOR_TO_PLOTTER_RATIO;
+                    pathLength += temp;
+                    y += temp;
+                    break;
+
+                case CodeGenerator.INS_RST_HORIZONTAL:
+                    pathLength += x;
+                    x = 0;
+                    break;
+
+                case CodeGenerator.INS_RST_VERTICAL:
+                    pathLength += y;
+                    y = 0;
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        return pathLength;
     }
 }
