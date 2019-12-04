@@ -98,9 +98,17 @@ export default class VisualCodeDecoder {
                     lIns = "RST_VERTICAL";
                     y = 0;
                     break;
+
+                default:
+                    continue;
             }
 
-            this.canvas.stroke(penDown * 255, 255, !penDown * 255, 255);
+            if (lIns === CodeGenerator.INS_RST_VERTICAL || lIns === CodeGenerator.INS_RST_HORIZONTAL) {
+                this.canvas.stroke(255, 255, 0, 100);
+            } else {
+                this.canvas.stroke(penDown * 255, 255, !penDown * 255, 255);
+            }
+
             this.canvas.line(
                 x * this.cellSize + this.cellSize / 2,
                 y * this.cellSize + this.cellSize / 2,

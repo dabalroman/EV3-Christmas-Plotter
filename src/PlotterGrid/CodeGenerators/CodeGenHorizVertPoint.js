@@ -25,6 +25,7 @@ export default class CodeGenHorizVertPoint extends CodeGenerator {
         let pos = {x: 0, y: 0};
 
         this.code.push(CodeGenHorizVertPoint.INS_RST_VERTICAL);
+        this.code.push(CodeGenHorizVertPoint.INS_RST_HORIZONTAL);
 
         horizontalLines.forEach(horizontalLine => {
             //Move to next row if necessary
@@ -53,11 +54,13 @@ export default class CodeGenHorizVertPoint extends CodeGenerator {
             this.code.push(CodeGenHorizVertPoint.INS_PEN_UP);
             pos.x = horizontalLine.x2;
         });
+
     }
 
     generateCodeForVerticalLines(verticalLines, horizontalLines) {
         let pos = {x: 0, y: 0};
 
+        this.code.push(CodeGenHorizVertPoint.INS_RST_VERTICAL);
         this.code.push(CodeGenHorizVertPoint.INS_RST_HORIZONTAL);
 
         for (let i = 0; i < verticalLines.length; i++) {
@@ -93,11 +96,11 @@ export default class CodeGenHorizVertPoint extends CodeGenerator {
             if (pos.x !== verticalLine.x1) {
                 if (pos.y !== 0) {
                     this.code.push(CodeGenHorizVertPoint.INS_RST_VERTICAL);
+                    pos.y = 0;
                 }
                 this.code.push(CodeGenHorizVertPoint.INS_MOV_RIGHT);
                 this.code.push((verticalLine.x1 - pos.x) * PlotterGrid.EDITOR_TO_PLOTTER_RATIO);
                 pos.x = verticalLine.x1;
-                pos.y = 0;
             }
 
             //Move to start of new line
@@ -119,6 +122,7 @@ export default class CodeGenHorizVertPoint extends CodeGenerator {
     generateCodeForPoints(points) {
         let pos = {x: 0, y: 0};
 
+        this.code.push(CodeGenHorizVertPoint.INS_RST_VERTICAL);
         this.code.push(CodeGenHorizVertPoint.INS_RST_HORIZONTAL);
 
         points.forEach(point => {
@@ -127,11 +131,11 @@ export default class CodeGenHorizVertPoint extends CodeGenerator {
             if (pos.x !== point.x) {
                 if (pos.y !== 0) {
                     this.code.push(CodeGenHorizVertPoint.INS_RST_VERTICAL);
+                    pos.y = 0;
                 }
                 this.code.push(CodeGenHorizVertPoint.INS_MOV_RIGHT);
                 this.code.push((point.x - pos.x) * PlotterGrid.EDITOR_TO_PLOTTER_RATIO);
                 pos.x = point.x;
-                pos.y = 0;
             }
 
             //Move to start of new line
