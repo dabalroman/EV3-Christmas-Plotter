@@ -6,6 +6,9 @@ export default class PlotterGrid {
     static GEN_LBL = 0;
     static GEN_HVP = 1;
 
+    //Cells to degree ratio. Real machine resolution is 1080 x 270 deg.
+    static EDITOR_TO_PLOTTER_RATIO = 9;
+
     /**
      * @type {Dimension} size
      */

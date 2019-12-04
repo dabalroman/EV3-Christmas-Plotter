@@ -9,8 +9,9 @@ import SphereRendererP5 from "./GridEditor/SphereRenderer.p5";
 class App extends Component {
     state = {
         visualCodeDecoderUpdateNeeded: false,
+        visualCodeDecoderStep: 0,
         enableSphereRotation: true,
-    }
+    };
 
     /**
      * @type {PlotterGrid}
@@ -66,6 +67,7 @@ class App extends Component {
                     renderedPlotterGrid={this.getRenderedPlotterGrid}
                     cellSize={8}
                     isVisualCodeDecoderUpdateNeeded={this.isVisualCodeDecoderUpdateNeeded}
+                    visualCodeDecoderStep={this.state.visualCodeDecoderStep}
                 />
                 <P5Wrapper
                     sketch={SphereRendererP5}
@@ -95,6 +97,23 @@ class App extends Component {
                     });
                 }}>
                     Generate HVP code
+                </button>
+                <button onClick={() => {
+                    this.setState({
+                        visualCodeDecoderUpdateNeeded: true,
+                        visualCodeDecoderStep: this.state.visualCodeDecoderStep + 1
+                    });
+                }}>
+                    +
+                </button>
+                <span> Step {this.state.visualCodeDecoderStep} </span>
+                <button onClick={() => {
+                    this.setState({
+                        visualCodeDecoderUpdateNeeded: true,
+                        visualCodeDecoderStep: this.state.visualCodeDecoderStep - 1
+                    });
+                }}>
+                    -
                 </button>
                 <button onClick={() => {
                     this.setState({

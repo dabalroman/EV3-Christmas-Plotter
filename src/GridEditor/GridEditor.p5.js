@@ -39,6 +39,11 @@ export default function GridEditorP5(p) {
      */
     let isVisualCodeDecoderUpdateNeeded = false;
 
+    /**
+     * @type {number}
+     */
+    let visualCodeDecoderStep = 0;
+
     p.setup = () => {
         p.setAttributes('antialias', true);
         p.createCanvas(plotterGrid.getSize().width * cellSize, plotterGrid.getSize().height * cellSize);
@@ -55,7 +60,7 @@ export default function GridEditorP5(p) {
 
         if (showCodeDecoder) {
             if(isVisualCodeDecoderUpdateNeeded){
-                visualCodeDecoder.decode(plotterGrid.plotterCode);
+                visualCodeDecoder.decode(plotterGrid.plotterCode, visualCodeDecoderStep);
                 isVisualCodeDecoderUpdateNeeded = false;
             }
 
@@ -80,6 +85,7 @@ export default function GridEditorP5(p) {
         plotterGrid = props.plotterGrid();
         renderedPlotterGrid = props.renderedPlotterGrid();
         cellSize = props.cellSize;
+        visualCodeDecoderStep = props.visualCodeDecoderStep;
 
         if(isVisualCodeDecoderUpdateNeeded === false){
             isVisualCodeDecoderUpdateNeeded = props.isVisualCodeDecoderUpdateNeeded();

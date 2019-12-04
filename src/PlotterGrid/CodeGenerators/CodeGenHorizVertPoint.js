@@ -1,4 +1,5 @@
 import CodeGenerator from "./CodeGenerator";
+import PlotterGrid from "../PlotterGrid";
 
 export default class CodeGenHorizVertPoint extends CodeGenerator {
     generateCode(plotterGrid: Boolean[][]) {
@@ -33,7 +34,7 @@ export default class CodeGenHorizVertPoint extends CodeGenerator {
                     this.code.push(CodeGenHorizVertPoint.INS_RST_HORIZONTAL);
                 }
                 this.code.push(CodeGenHorizVertPoint.INS_MOV_DOWN);
-                this.code.push(horizontalLine.y1 - pos.y);
+                this.code.push((horizontalLine.y1 - pos.y) * PlotterGrid.EDITOR_TO_PLOTTER_RATIO);
                 pos.x = 0;
                 pos.y = horizontalLine.y1;
             }
@@ -41,14 +42,14 @@ export default class CodeGenHorizVertPoint extends CodeGenerator {
             //Move to start of new line
             if (pos.x !== horizontalLine.x1) {
                 this.code.push(CodeGenHorizVertPoint.INS_MOV_RIGHT);
-                this.code.push(horizontalLine.x1 - pos.x);
+                this.code.push((horizontalLine.x1 - pos.x) * PlotterGrid.EDITOR_TO_PLOTTER_RATIO);
                 pos.x = horizontalLine.x1;
             }
 
             //Draw line
             this.code.push(CodeGenHorizVertPoint.INS_PEN_DOWN);
             this.code.push(CodeGenHorizVertPoint.INS_MOV_RIGHT);
-            this.code.push(horizontalLine.x2 - pos.x);
+            this.code.push((horizontalLine.x2 - pos.x) * PlotterGrid.EDITOR_TO_PLOTTER_RATIO);
             this.code.push(CodeGenHorizVertPoint.INS_PEN_UP);
             pos.x = horizontalLine.x2;
         });
@@ -94,7 +95,7 @@ export default class CodeGenHorizVertPoint extends CodeGenerator {
                     this.code.push(CodeGenHorizVertPoint.INS_RST_VERTICAL);
                 }
                 this.code.push(CodeGenHorizVertPoint.INS_MOV_RIGHT);
-                this.code.push(verticalLine.x1 - pos.x);
+                this.code.push((verticalLine.x1 - pos.x) * PlotterGrid.EDITOR_TO_PLOTTER_RATIO);
                 pos.x = verticalLine.x1;
                 pos.y = 0;
             }
@@ -102,14 +103,14 @@ export default class CodeGenHorizVertPoint extends CodeGenerator {
             //Move to start of new line
             if (pos.y !== verticalLine.y1) {
                 this.code.push(CodeGenHorizVertPoint.INS_MOV_DOWN);
-                this.code.push(verticalLine.y1 - pos.y);
+                this.code.push((verticalLine.y1 - pos.y) * PlotterGrid.EDITOR_TO_PLOTTER_RATIO);
                 pos.y = verticalLine.y1;
             }
 
             //Draw line
             this.code.push(CodeGenHorizVertPoint.INS_PEN_DOWN);
             this.code.push(CodeGenHorizVertPoint.INS_MOV_DOWN);
-            this.code.push(verticalLine.y2 - pos.y);
+            this.code.push((verticalLine.y2 - pos.y) * PlotterGrid.EDITOR_TO_PLOTTER_RATIO);
             this.code.push(CodeGenHorizVertPoint.INS_PEN_UP);
             pos.y = verticalLine.y2;
         }
@@ -128,7 +129,7 @@ export default class CodeGenHorizVertPoint extends CodeGenerator {
                     this.code.push(CodeGenHorizVertPoint.INS_RST_VERTICAL);
                 }
                 this.code.push(CodeGenHorizVertPoint.INS_MOV_RIGHT);
-                this.code.push(point.x - pos.x);
+                this.code.push((point.x - pos.x) * PlotterGrid.EDITOR_TO_PLOTTER_RATIO);
                 pos.x = point.x;
                 pos.y = 0;
             }
@@ -136,7 +137,7 @@ export default class CodeGenHorizVertPoint extends CodeGenerator {
             //Move to start of new line
             if (pos.y !== point.y) {
                 this.code.push(CodeGenHorizVertPoint.INS_MOV_DOWN);
-                this.code.push(point.y - pos.y);
+                this.code.push((point.y - pos.y) * PlotterGrid.EDITOR_TO_PLOTTER_RATIO);
                 pos.y = point.y;
             }
 

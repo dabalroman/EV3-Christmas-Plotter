@@ -1,4 +1,5 @@
 import CodeGenerator from "./CodeGenerator";
+import PlotterGrid from "../PlotterGrid";
 
 export default class CodeGenLineByLineHoriz extends CodeGenerator {
     generateCode(plotterGrid: Boolean[][]) {
@@ -29,7 +30,7 @@ export default class CodeGenLineByLineHoriz extends CodeGenerator {
                     this.code.push(CodeGenLineByLineHoriz.INS_RST_HORIZONTAL);
                 }
                 this.code.push(CodeGenLineByLineHoriz.INS_MOV_DOWN);
-                this.code.push(horizontalLine.y1 - pos.y);
+                this.code.push((horizontalLine.y1 - pos.y) * PlotterGrid.EDITOR_TO_PLOTTER_RATIO);
                 pos.x = 0;
                 pos.y = horizontalLine.y1;
             }
@@ -37,7 +38,7 @@ export default class CodeGenLineByLineHoriz extends CodeGenerator {
             //Move to start of new line
             if (pos.x !== horizontalLine.x1) {
                 this.code.push(CodeGenLineByLineHoriz.INS_MOV_RIGHT);
-                this.code.push(horizontalLine.x1 - pos.x);
+                this.code.push((horizontalLine.x1 - pos.x) * PlotterGrid.EDITOR_TO_PLOTTER_RATIO);
                 pos.x = horizontalLine.x1;
             }
 
@@ -45,7 +46,7 @@ export default class CodeGenLineByLineHoriz extends CodeGenerator {
             this.code.push(CodeGenLineByLineHoriz.INS_PEN_DOWN);
             if (horizontalLine.x1 !== horizontalLine.x2) {
                 this.code.push(CodeGenLineByLineHoriz.INS_MOV_RIGHT);
-                this.code.push(horizontalLine.x2 - pos.x);
+                this.code.push((horizontalLine.x2 - pos.x) * PlotterGrid.EDITOR_TO_PLOTTER_RATIO);
             }
             this.code.push(CodeGenLineByLineHoriz.INS_PEN_UP);
             pos.x = horizontalLine.x2;
