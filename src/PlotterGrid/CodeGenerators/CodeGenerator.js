@@ -46,5 +46,30 @@ export default class CodeGenerator {
      */
     generateCode(plotterGrid) {
     };
+
+    createLegoMindstormsDataBlock(code: number[]): string {
+        let blockPattern = '﻿<MergeScript xmlns="http://www.ni.com/DiagramSdk.xsd">\n' +
+            '    <MergeData Key="SerializationReason" Value="Copy" />\n' +
+            '    <MergeGroup Path=".">\n' +
+            '        <MergeItem Path="." IsPrimary="True">' +
+            '           <ConfigurableMethodCall Id="n4" Bounds="218 190 101 91" Target="X3\\.Lib:GlobalSetNumericArray" xmlns="http://www.ni.com/VirtualInstrument.xsd">' +
+            '               <ConfigurableMethodTerminal ConfiguredValue="Instructions">' +
+            '                   <Terminal Id="name" Direction="Input" DataType="String" Hotspot="0.5 1" Bounds="0 0 0 0" />' +
+            '               </ConfigurableMethodTerminal>' +
+            '               <ConfigurableMethodTerminal ConfiguredValue="[$code]">' +
+            '                   <Terminal Id="valueIn" Direction="Input" DataType="Single[]" Hotspot="0.5 1" Bounds="54 56 30 27" />' +
+            '               </ConfigurableMethodTerminal>' +
+            '               <ConfigurableMethodTerminal ConfiguredValue="0">' +
+            '                   <Terminal Id="InterruptsToListenFor_16B03592_CD76_4D58_8DC3_E3C3091E327A" Direction="Input" DataType="Int32" Hotspot="0.5 1" Bounds="0 0 0 0" />' +
+            '               </ConfigurableMethodTerminal>' +
+            '               <Terminal Id="SequenceIn" Direction="Input" Wire="w3" DataType="NationalInstruments:SourceModel:DataTypes:X3SequenceWireDataType" Hotspot="0 0.5" Bounds="0 33 18 18" />' +
+            '               <Terminal Id="SequenceOut" Direction="Output" DataType="NationalInstruments:SourceModel:DataTypes:X3SequenceWireDataType" Hotspot="1 0.5" Bounds="83 33 18 18" />' +
+            '           </ConfigurableMethodCall>' +
+            '       </MergeItem>\n' +
+            '    </MergeGroup>\n' +
+            '</MergeScript>';
+
+        return blockPattern.replace("$code", code.reduce((p, n) => p + ', ' + n));
+    }
 }
 

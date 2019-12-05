@@ -1,5 +1,6 @@
 import CodeGenerator from "./CodeGenerator";
 import PlotterGrid from "../PlotterGrid";
+import Utils from "../../Utils/Utils";
 
 export default class CodeGenLineByLineHoriz extends CodeGenerator {
     generateCode(plotterGrid: Boolean[][]) {
@@ -13,6 +14,8 @@ export default class CodeGenLineByLineHoriz extends CodeGenerator {
         this.generateCodeForHorizontalLinesAndDots(horizontalLines);
 
         this.code.push(CodeGenLineByLineHoriz.INS_DONE);
+
+        Utils.copyToClipboard(this.createLegoMindstormsDataBlock(this.code));
 
         return this.code;
     }

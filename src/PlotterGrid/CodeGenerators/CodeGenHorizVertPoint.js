@@ -1,5 +1,6 @@
 import CodeGenerator from "./CodeGenerator";
 import PlotterGrid from "../PlotterGrid";
+import Utils from "../../Utils/Utils";
 
 export default class CodeGenHorizVertPoint extends CodeGenerator {
     generateCode(plotterGrid: Boolean[][]) {
@@ -17,6 +18,8 @@ export default class CodeGenHorizVertPoint extends CodeGenerator {
         this.generateCodeForPoints(points);
 
         this.code.push(CodeGenHorizVertPoint.INS_DONE);
+
+        Utils.copyToClipboard(this.createLegoMindstormsDataBlock(this.code));
 
         return this.code;
     }
