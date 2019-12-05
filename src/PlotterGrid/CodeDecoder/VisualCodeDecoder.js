@@ -68,8 +68,8 @@ export default class VisualCodeDecoder {
                     break;
 
                 case CodeGenerator.INS_PEN_DOWN:
-                    penDown = true;
                     lIns = "PEN_DOWN";
+                    penDown = true;
                     break;
 
                 case CodeGenerator.INS_PEN_UP:
