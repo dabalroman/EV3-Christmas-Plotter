@@ -79,14 +79,26 @@ export default class VisualCodeDecoder {
 
                 case CodeGenerator.INS_MOV_RIGHT:
                     lIns = "MOV_RIGHT";
-                    lArg = code[i + 1] / PlotterGrid.EDITOR_TO_PLOTTER_RATIO;
-                    x += code[++i] / PlotterGrid.EDITOR_TO_PLOTTER_RATIO;
+                    lArg = code[++i] / PlotterGrid.EDITOR_TO_PLOTTER_RATIO;
+                    x += lArg;
+                    break;
+
+                case CodeGenerator.INS_MOV_LEFT:
+                    lIns = "MOV_LEFT";
+                    lArg = code[++i] / PlotterGrid.EDITOR_TO_PLOTTER_RATIO;
+                    x -= lArg;
                     break;
 
                 case CodeGenerator.INS_MOV_DOWN:
                     lIns = "MOV_DOWN";
-                    lArg = code[i + 1] / PlotterGrid.EDITOR_TO_PLOTTER_RATIO;
-                    y += code[++i] / PlotterGrid.EDITOR_TO_PLOTTER_RATIO;
+                    lArg = code[++i] / PlotterGrid.EDITOR_TO_PLOTTER_RATIO;
+                    y += lArg;
+                    break;
+
+                case CodeGenerator.INS_MOV_UP:
+                    lIns = "MOV_UP";
+                    lArg = code[++i] / PlotterGrid.EDITOR_TO_PLOTTER_RATIO;
+                    y -= lArg;
                     break;
 
                 case CodeGenerator.INS_RST_HORIZONTAL:
