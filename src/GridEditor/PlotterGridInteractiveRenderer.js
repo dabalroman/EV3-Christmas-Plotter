@@ -148,4 +148,9 @@ export default class PlotterGridInteractiveRenderer {
         this.plotterGrid.setCellState(point.x, point.y, state);
         this.renderCell(point.x, point.y);
     }
+
+    forceReRender() {
+        this.gridUpdateRequired = true;
+        this.canvasUpdateRequired = true;
+    }
 }

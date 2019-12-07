@@ -11,8 +11,10 @@ import SphereRendererP5 from "./GridEditor/SphereRenderer.p5";
 class App extends Component {
     state = {
         visualCodeDecoderUpdateNeeded: false,
+        canvasUpdateNeeded: false,
         visualCodeDecoderStep: 50,
         enableSphereRotation: true,
+        serializedPlotterGrid: ""
     };
 
     /**
@@ -27,6 +29,7 @@ class App extends Component {
         this.plotterGrid = new PlotterGrid(120, 28);
         this.getPlotterGrid = this.getPlotterGrid.bind(this);
         this.getRenderedPlotterGrid = this.getRenderedPlotterGrid.bind(this);
+        this.isCanvasUpdateNeeded = this.isCanvasUpdateNeeded.bind(this);
         this.isVisualCodeDecoderUpdateNeeded = this.isVisualCodeDecoderUpdateNeeded.bind(this);
     }
 
@@ -57,6 +60,17 @@ class App extends Component {
         return currentVCDUNState;
     }
 
+    isCanvasUpdateNeeded() {
+        let currentCUNState = this.state.canvasUpdateNeeded;
+
+        if (currentCUNState !== false) {
+            this.setState({
+                canvasUpdateNeeded: false
+            });
+        }
+
+        return currentCUNState;
+    }
 
     render() {
         return (
@@ -69,6 +83,7 @@ class App extends Component {
                     renderedPlotterGrid={this.getRenderedPlotterGrid}
                     cellSize={8}
                     isVisualCodeDecoderUpdateNeeded={this.isVisualCodeDecoderUpdateNeeded}
+                    isCanvasUpdateNeeded={this.isCanvasUpdateNeeded}
                     visualCodeDecoderStep={this.state.visualCodeDecoderStep}
                 />
                 <P5Wrapper
@@ -139,6 +154,26 @@ class App extends Component {
                 }}>
                     Toggle sphere rotation
                 </button>
+                <div>
+                    <textarea onChange={(e) => {
+                        this.setState({
+                            serializedPlotterGrid: e.target.value
+                        });
+                    }} value={this.state.serializedPlotterGrid}/>
+                    <button onClick={() => {
+                        this.setState({
+                            serializedPlotterGrid: this.plotterGrid.serialize()
+                        });
+                    }}>Get
+                    </button>
+                    <button onClick={() => {
+                        this.plotterGrid.deserialize(this.state.serializedPlotterGrid);
+                        this.setState({
+                            canvasUpdateNeeded: true
+                        });
+                    }}>Set
+                    </button>
+                </div>
             </div>
         );
     }

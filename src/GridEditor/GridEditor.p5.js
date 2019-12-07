@@ -87,8 +87,12 @@ export default function GridEditorP5(p) {
         cellSize = props.cellSize;
         visualCodeDecoderStep = props.visualCodeDecoderStep;
 
-        if(isVisualCodeDecoderUpdateNeeded === false){
+        if (isVisualCodeDecoderUpdateNeeded === false) {
             isVisualCodeDecoderUpdateNeeded = props.isVisualCodeDecoderUpdateNeeded();
+        }
+
+        if (props.isCanvasUpdateNeeded()) {
+            plotterGridInteractiveRenderer.forceReRender();
         }
     };
 };

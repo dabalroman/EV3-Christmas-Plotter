@@ -52,7 +52,7 @@ export default class CodeGenerator {
             '    <MergeData Key="SerializationReason" Value="Copy" />\n' +
             '    <MergeGroup Path=".">\n' +
             '        <MergeItem Path="." IsPrimary="True">' +
-            '           <ConfigurableMethodCall Id="n4" Bounds="218 190 101 91" Target="X3\\.Lib:GlobalSetNumericArray" xmlns="http://www.ni.com/VirtualInstrument.xsd">' +
+            '           <ConfigurableMethodCall Id="n4" Bounds="403 348 101 91" Target="X3\\.Lib:GlobalSetNumericArray" xmlns="http://www.ni.com/VirtualInstrument.xsd">' +
             '               <ConfigurableMethodTerminal ConfiguredValue="Instructions">' +
             '                   <Terminal Id="name" Direction="Input" DataType="String" Hotspot="0.5 1" Bounds="0 0 0 0" />' +
             '               </ConfigurableMethodTerminal>' +

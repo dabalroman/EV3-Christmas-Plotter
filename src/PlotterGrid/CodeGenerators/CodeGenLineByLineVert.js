@@ -27,6 +27,9 @@ export default class CodeGenLineByLineVert extends CodeGenerator {
         this.code.push(CodeGenLineByLineVert.INS_RST_VERTICAL);
 
         verticalLines.forEach(verticalLine => {
+            start = verticalLine.y1;
+            end = verticalLine.y2;
+
             //Move to next column if necessary
             if (pos.x !== verticalLine.x1) {
                 this.code.push(CodeGenLineByLineVert.INS_MOV_RIGHT);
@@ -34,14 +37,14 @@ export default class CodeGenLineByLineVert extends CodeGenerator {
                 pos.x = verticalLine.x1;
             }
 
-            //Select DOWN or UP case
-            if (Math.abs(pos.y - verticalLine.y1) < Math.abs(pos.y - verticalLine.y2)) {
-                start = verticalLine.y1;
-                end = verticalLine.y2;
-            } else {
-                start = verticalLine.y2;
-                end = verticalLine.y1;
-            }
+            // //Select DOWN or UP case
+            // if (Math.abs(pos.y - verticalLine.y1) < Math.abs(pos.y - verticalLine.y2)) {
+            //     start = verticalLine.y1;
+            //     end = verticalLine.y2;
+            // } else {
+            //     start = verticalLine.y2;
+            //     end = verticalLine.y1;
+            // }
 
             //Move to start of new line
             if (pos.y !== start) {
