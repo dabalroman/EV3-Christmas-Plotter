@@ -57,7 +57,7 @@ export default class CodeGenLineByLineHoriz extends CodeGenerator {
     }
 
     findHorizontalLinesAndDots(plotterGrid) {
-        let verticalLines = [];
+        let horizontalLines = [];
         let lineLength = 0;
 
         for (let y = 0; y < plotterGrid[0].length; y++) {
@@ -66,7 +66,7 @@ export default class CodeGenLineByLineHoriz extends CodeGenerator {
                     lineLength++;
                 } else {
                     if (lineLength >= 1) {
-                        verticalLines.push({
+                        horizontalLines.push({
                             x1: x - lineLength,
                             y1: y,
                             x2: x - 1,
@@ -74,12 +74,11 @@ export default class CodeGenLineByLineHoriz extends CodeGenerator {
                         });
                     }
 
-
                     lineLength = 0;
                 }
             }
         }
 
-        return verticalLines;
+        return horizontalLines;
     }
 }

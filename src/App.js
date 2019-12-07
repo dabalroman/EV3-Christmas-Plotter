@@ -85,12 +85,20 @@ class App extends Component {
                     Log plotter grid
                 </button>
                 <button onClick={() => {
-                    this.plotterGrid.generatePlotterCode(PlotterGrid.GEN_LBL);
+                    this.plotterGrid.generatePlotterCode(PlotterGrid.GEN_HLBL);
                     this.setState({
                         visualCodeDecoderUpdateNeeded: true
                     });
                 }}>
-                    Generate LBL code
+                    Generate HLBL code
+                </button>
+                <button onClick={() => {
+                    this.plotterGrid.generatePlotterCode(PlotterGrid.GEN_VLBL);
+                    this.setState({
+                        visualCodeDecoderUpdateNeeded: true
+                    });
+                }}>
+                    Generate VLBL code
                 </button>
                 <button onClick={() => {
                     this.plotterGrid.generatePlotterCode(PlotterGrid.GEN_HVP);

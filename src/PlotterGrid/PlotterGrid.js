@@ -1,10 +1,12 @@
 import Dimension from "../Utils/Dimension";
 import CodeGenLineByLineHoriz from "./CodeGenerators/CodeGenLineByLineHoriz";
 import CodeGenHorizVertPoint from "./CodeGenerators/CodeGenHorizVertPoint";
+import CodeGenLineByLineVert from "./CodeGenerators/CodeGenLineByLineVert";
 
 export default class PlotterGrid {
-    static GEN_LBL = 0;
-    static GEN_HVP = 1;
+    static GEN_HLBL = 0;
+    static GEN_VLBL = 1;
+    static GEN_HVP = 2;
 
     //Cells to degree ratio. Real machine resolution is 1080 x 270 deg.
     static EDITOR_TO_PLOTTER_RATIO = 9;
@@ -114,8 +116,12 @@ export default class PlotterGrid {
 
         switch (type) {
             default:
-            case PlotterGrid.GEN_LBL:
+            case PlotterGrid.GEN_HLBL:
                 plotterCodeGenerator = new CodeGenLineByLineHoriz();
+                break;
+
+            case PlotterGrid.GEN_VLBL:
+                plotterCodeGenerator = new CodeGenLineByLineVert();
                 break;
 
             case PlotterGrid.GEN_HVP:
