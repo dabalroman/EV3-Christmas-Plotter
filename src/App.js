@@ -24,7 +24,7 @@ class App extends Component {
 
     constructor() {
         super();
-        this.plotterGrid = new PlotterGrid(120, 30);
+        this.plotterGrid = new PlotterGrid(120, 28);
         this.getPlotterGrid = this.getPlotterGrid.bind(this);
         this.getRenderedPlotterGrid = this.getRenderedPlotterGrid.bind(this);
         this.isVisualCodeDecoderUpdateNeeded = this.isVisualCodeDecoderUpdateNeeded.bind(this);

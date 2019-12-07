@@ -52,8 +52,8 @@ export default class PlotterGrid {
         //Control points
         this.setCellState(0, 0);
         this.setCellState(119, 0);
-        this.setCellState(0, 29);
-        this.setCellState(119, 29);
+        this.setCellState(0, 27);
+        this.setCellState(119, 27);
     }
 
     /**
