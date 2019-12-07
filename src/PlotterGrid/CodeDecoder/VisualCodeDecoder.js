@@ -152,9 +152,9 @@ export default class VisualCodeDecoder {
 
         this.canvas.fill(0);
         this.canvas.noStroke();
-        this.canvas.text("Step " + step + "/" + code.length, 10, 230);
-        this.canvas.text("Instruction: " + lIns + " / " + lArg, 10, 210);
-        this.canvas.text("Path length: " + this.countPathLength(code, step), 100, 230);
+        this.canvas.text("Step " + step + "/" + code.length, 10, 210);
+        this.canvas.text("Instruction: " + lIns + " / " + lArg, 10, 190);
+        this.canvas.text("Path length: " + this.countPathLength(code, step), 100, 210);
     }
 
     countPathLength(code: number[], step: number): number {

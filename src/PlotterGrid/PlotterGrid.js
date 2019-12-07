@@ -169,4 +169,28 @@ export default class PlotterGrid {
     setCellState(x, y, state = true) {
         this.grid[x][y] = state;
     }
+
+    serialize(): string {
+        let s = JSON.stringify(this.grid);
+        localStorage.setItem('grid', s);
+        return s;
+    }
+
+    deserialize(serialized: string) {
+        if (serialized === '') {
+            serialized = localStorage.getItem('grid');
+
+            if (serialized === '') {
+                return;
+            }
+        }
+
+        let data = JSON.parse(serialized);
+
+        for (let w = 0; w < this.size.width; ++w) {
+            for (let h = 0; h < this.size.height; ++h) {
+                this.grid[w][h] = data[w][h];
+            }
+        }
+    }
 }
