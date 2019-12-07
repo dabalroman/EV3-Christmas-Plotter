@@ -35,7 +35,7 @@ export default function SphereRendererP5(p) {
         p.noStroke();
         p.smooth();
 
-        texture = p.createGraphics(960, 720);
+        texture = p.createGraphics(960, 480);
     };
 
     p.draw = () => {
@@ -44,7 +44,7 @@ export default function SphereRendererP5(p) {
 
         if (p.frameCount - lastTextureUpdateFrame >= 3) {
             texture.background(240);
-            texture.image(renderedPlotterGrid.graphics, 0, 240);
+            texture.image(renderedPlotterGrid.graphics, 0, 120);
 
             lastTextureUpdateFrame = p.frameCount;
         }
