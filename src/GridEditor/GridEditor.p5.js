@@ -90,9 +90,5 @@ export default function GridEditorP5(p) {
         if (isVisualCodeDecoderUpdateNeeded === false) {
             isVisualCodeDecoderUpdateNeeded = props.isVisualCodeDecoderUpdateNeeded();
         }
-
-        if (props.isCanvasUpdateNeeded()) {
-            plotterGridInteractiveRenderer.forceReRender();
-        }
     };
 };

@@ -26,9 +26,9 @@ export default class PlotterGridInteractiveRenderer {
     position;
 
     /**
-     * @type {boolean} gridUpdateRequired
+     * @type {number}
      */
-    gridUpdateRequired = true;
+    lastRenderedCanvasStep = 0;
 
     /**
      * @type {boolean} canvasUpdateRequired
@@ -56,8 +56,9 @@ export default class PlotterGridInteractiveRenderer {
     }
 
     render() {
-        if (this.gridUpdateRequired) {
+        if (!this.plotterGrid.isUpToDate(this.lastRenderedCanvasStep)) {
             this.renderGrid();
+            this.canvasUpdateRequired = true;
         }
 
         if (this.canvasUpdateRequired || this.p.mouseX !== this.p.pmouseX || this.p.mouseY !== this.p.pmouseY) {
@@ -102,7 +103,7 @@ export default class PlotterGridInteractiveRenderer {
             }
         }
 
-        this.gridUpdateRequired = false;
+        this.lastRenderedCanvasStep = this.plotterGrid.getCurrentStep();
     }
 
     /**
@@ -126,7 +127,7 @@ export default class PlotterGridInteractiveRenderer {
      * @return {*}
      */
     getRenderedGrid() {
-        if (this.gridUpdateRequired) {
+        if (!this.plotterGrid.isUpToDate(this.lastRenderedCanvasStep)) {
             this.renderGrid();
         }
 
@@ -147,10 +148,8 @@ export default class PlotterGridInteractiveRenderer {
 
         this.plotterGrid.setCellState(point.x, point.y, state);
         this.renderCell(point.x, point.y);
-    }
 
-    forceReRender() {
-        this.gridUpdateRequired = true;
-        this.canvasUpdateRequired = true;
+        //Update last rendered step value to prevent re-rendering
+        this.lastRenderedCanvasStep = this.plotterGrid.getCurrentStep();
     }
 }

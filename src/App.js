@@ -1,19 +1,14 @@
 import React, {Component} from 'react';
-import P5Wrapper from 'react-p5-wrapper';
 
-import Classes from './App.module.css';
-
-import GridEditorP5 from "./GridEditor/GridEditor.p5";
-import GridEditorStyles from "./GridEditor/GridEditor.module.css";
+import Styles from './App.module.css';
 import PlotterGrid from "./PlotterGrid/PlotterGrid";
-import SphereRendererP5 from "./GridEditor/SphereRenderer.p5";
+
+import Sphere from "./Components/Sphere/Sphere";
+import Editor from "./Components/Editor/Editor";
+import BottomButtonBar from "./Components/BottomButtonBar/BottomButtonBar";
 
 class App extends Component {
     state = {
-        visualCodeDecoderUpdateNeeded: false,
-        canvasUpdateNeeded: false,
-        visualCodeDecoderStep: 50,
-        enableSphereRotation: true,
         serializedPlotterGrid: ""
     };
 
@@ -29,8 +24,6 @@ class App extends Component {
         this.plotterGrid = new PlotterGrid(120, 28);
         this.getPlotterGrid = this.getPlotterGrid.bind(this);
         this.getRenderedPlotterGrid = this.getRenderedPlotterGrid.bind(this);
-        this.isCanvasUpdateNeeded = this.isCanvasUpdateNeeded.bind(this);
-        this.isVisualCodeDecoderUpdateNeeded = this.isVisualCodeDecoderUpdateNeeded.bind(this);
     }
 
     /**
@@ -48,82 +41,22 @@ class App extends Component {
         return this.renderedPlotterGrid;
     }
 
-    isVisualCodeDecoderUpdateNeeded() {
-        let currentVCDUNState = this.state.visualCodeDecoderUpdateNeeded;
-
-        if (currentVCDUNState !== false) {
-            this.setState({
-                visualCodeDecoderUpdateNeeded: false
-            });
-        }
-
-        return currentVCDUNState;
-    }
-
-    isCanvasUpdateNeeded() {
-        let currentCUNState = this.state.canvasUpdateNeeded;
-
-        if (currentCUNState !== false) {
-            this.setState({
-                canvasUpdateNeeded: false
-            });
-        }
-
-        return currentCUNState;
-    }
-
     render() {
         return (
-            <div className={GridEditorStyles.editorCanvas} onContextMenu={(e) => {
+            <div className={Styles.app} onContextMenu={(e) => {
                 e.preventDefault();
             }}>
-                <P5Wrapper
-                    sketch={GridEditorP5}
+                <Editor
+                    getPlotterGrid={this.getPlotterGrid}
+                    getRenderedPlotterGrid={this.getRenderedPlotterGrid}
+                />
+                <Sphere
+                    renderedPlotterGrid={this.getRenderedPlotterGrid}
+                />
+                <BottomButtonBar
                     plotterGrid={this.getPlotterGrid}
-                    renderedPlotterGrid={this.getRenderedPlotterGrid}
-                    cellSize={8}
-                    isVisualCodeDecoderUpdateNeeded={this.isVisualCodeDecoderUpdateNeeded}
-                    isCanvasUpdateNeeded={this.isCanvasUpdateNeeded}
-                    visualCodeDecoderStep={this.state.visualCodeDecoderStep}
                 />
-                <P5Wrapper
-                    sketch={SphereRendererP5}
-                    renderedPlotterGrid={this.getRenderedPlotterGrid}
-                    enableRotation={this.state.enableSphereRotation}
-                    width={300}
-                    height={300}
-                />
-                <button onClick={() => {
-                    console.log(this.plotterGrid);
-                    console.log(this.renderedPlotterGrid);
-                }}>
-                    Log plotter grid
-                </button>
-                <button onClick={() => {
-                    this.plotterGrid.generatePlotterCode(PlotterGrid.GEN_HLBL);
-                    this.setState({
-                        visualCodeDecoderUpdateNeeded: true
-                    });
-                }}>
-                    Generate HLBL code
-                </button>
-                <button onClick={() => {
-                    this.plotterGrid.generatePlotterCode(PlotterGrid.GEN_VLBL);
-                    this.setState({
-                        visualCodeDecoderUpdateNeeded: true
-                    });
-                }}>
-                    Generate VLBL code
-                </button>
-                <button onClick={() => {
-                    this.plotterGrid.generatePlotterCode(PlotterGrid.GEN_HVP);
-                    this.setState({
-                        visualCodeDecoderUpdateNeeded: true
-                    });
-                }}>
-                    Generate HVP code
-                </button>
-                <div className={Classes.debuggerControls}>
+                <div className={Styles.debuggerControls}>
                     <button onClick={() => {
                         this.setState({
                             visualCodeDecoderUpdateNeeded: true,
@@ -147,13 +80,6 @@ class App extends Component {
                         -
                     </button>
                 </div>
-                <button onClick={() => {
-                    this.setState({
-                        enableSphereRotation: !this.state.enableSphereRotation
-                    });
-                }}>
-                    Toggle sphere rotation
-                </button>
                 <div>
                     <textarea onChange={(e) => {
                         this.setState({

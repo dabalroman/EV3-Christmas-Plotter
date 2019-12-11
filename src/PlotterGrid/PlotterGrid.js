@@ -8,7 +8,7 @@ export default class PlotterGrid {
     static GEN_VLBL = 1;
     static GEN_HVP = 2;
 
-    //Cells to degree ratio. Real machine resolution is 1080 x 270 deg.
+    //Cells to degree ratio. Real machine resolution is 1080 x 252 deg.
     static EDITOR_TO_PLOTTER_RATIO = 9;
 
     /**
@@ -27,6 +27,12 @@ export default class PlotterGrid {
      * @type {Number[]}
      */
     plotterCode;
+
+    /**
+     * Integer for change tracking
+     * @type {number}
+     */
+    stepTracker = 0;
 
     /**
      * Create PlotterGrid
@@ -76,6 +82,28 @@ export default class PlotterGrid {
     }
 
     /**
+     * Register any changes to tracker
+     */
+    registerStep() {
+        this.stepTracker++;
+    }
+
+    /**
+     * Check if give step id is same as current
+     */
+    isUpToDate(step) {
+        return step === this.stepTracker;
+    }
+
+    /**
+     * Get current step id
+     * @return {number}
+     */
+    getCurrentStep() {
+        return this.stepTracker;
+    }
+
+    /**
      * Fill grid with random data
      */
     random() {
@@ -84,6 +112,8 @@ export default class PlotterGrid {
                 this.grid[i][j] = (Math.random() * 2) >= 1;
             }
         }
+
+        this.registerStep();
     }
 
     /**
@@ -105,6 +135,8 @@ export default class PlotterGrid {
         for (let w = 0; w < this.size.width; ++w) {
             this.grid[w] = new Array(this.size.height).fill(false);
         }
+
+        this.registerStep();
     }
 
     /**
@@ -140,6 +172,8 @@ export default class PlotterGrid {
         for (let w = 0; w < this.size.width; ++w) {
             this.grid[w].fill(false);
         }
+
+        this.registerStep();
     }
 
     /**
@@ -167,7 +201,10 @@ export default class PlotterGrid {
      * @param {Boolean} state
      */
     setCellState(x, y, state = true) {
-        this.grid[x][y] = state;
+        if (this.grid[x][y] !== state) {
+            this.grid[x][y] = state;
+            this.registerStep();
+        }
     }
 
     serialize(): string {
@@ -192,5 +229,7 @@ export default class PlotterGrid {
                 this.grid[w][h] = data[w][h];
             }
         }
+
+        this.registerStep();
     }
 }
