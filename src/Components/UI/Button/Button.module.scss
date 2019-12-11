@@ -1,0 +1,33 @@
+$buttonHeight: 5px;
+
+.button {
+    display: inline-block !important;
+    margin: 8px;
+
+    button {
+        background: #2196F3;
+        color: #fff;
+        padding: 10px;
+        display: block;
+        width: 100%;
+        border: none;
+        border-bottom: $buttonHeight solid #175da2;
+        cursor: pointer;
+
+        &:hover {
+            background: #18c172;
+            border-bottom-color: #0f8c84;
+            border-bottom-width: $buttonHeight;
+        }
+
+        &:active {
+            margin-top: $buttonHeight;
+            border-bottom-width: 0 !important;
+        }
+    }
+}
+
+.danger button:hover {
+    background: #f3cd5b !important;
+    border-bottom-color: #b2a03a !important;
+}
