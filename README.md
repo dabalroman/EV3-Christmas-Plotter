@@ -10,10 +10,10 @@ Projekt składa się z 3 zasadniczych elementów:
 ### Spis treści
 - [Pisak](#pisak)
 - [Bombki](#bombki-choinkowe)
-- [Edytor wzorów](#edytor-wzorw)
+- [Edytor wzorów](#edytor-wzorów)
 - [Drukowanie](#drukowanie-wzoru)
-- [Rozwiązywanie problemów](#rozwizywanie-problemw)
-- [Dodatek: Drukarka czy ploter?](#cieka-gowicy---drukarka-czy-ploter)
+- [Rozwiązywanie problemów](#rozwiązywanie-problemów)
+- [Dodatek: Drukarka czy ploter?](#ścieżka-głowicy---drukarka-czy-ploter)
 
 ### Dodatkowe materiały
 - Gumka recepturka (gumka z zestawu może być zbyt krótka)
