@@ -12,17 +12,33 @@ Projekt składa się z 3 zasadniczych elementów:
 - Pisak permanentny, najlepiej w kolorze kontastującym z barwą bombek
 - Bombki choinkowe o średnicy 6 cm
 
-
 # Budowa modelu
 Instrukcje potrzebne do budowy modelu dostępne są jako plik pdf.
 Wszystkie elementy wymagane do budowy zawarte są w zestawie LEGO® MINDSTORMS® EV3 31313.
 
 # Pisak
 Pisak powinien pisać w kolorze dobrze kontrastującym z barwą bombki.
+
+![Marker pen colours](readme-data/marker-pen-samples.jpg)
+
+Widoczność pisaka na powierzchni bombki została zaznaczona jako '+' w poniższej tabeli.
+Najlepszy kontrast oznaczono jako 'X'.
+
+| Pisak \\ Bombka | Złota | Złota mat | Srebrna | Srebrna Mat | Niebieska |
+| :---------------|:-----:|:---------:|:-------:|:-----------:|:---------:|
+|           Złoty |       |           |    X    |      +      |     +     |
+|       Niebieski |   X   |     +     |    X    |      X      |     X     |
+|        Czerwony |   +   |     +     |    +    |      +      |     +     |
+|         Srebrny |       |     +     |         |             |           |
+|       Fioletowy |   X   |     X     |    +    |      X      |     X     |
+|         Zielony |   +   |     X     |    +    |      +      |     +     |
+
 > Uwaga! Pisaki permanentne bardzo szybko wysychają, należy zamykać je bezzwłocznie po każdym drukowaniu.
 
 ### Montaż
 Pisak montujemy przy pomocy gumki w uchwycie.
+
+![Marker pen installation](readme-data/marker-pen-installation.jpg)
 
 ### Dostosowanie wysokości pisaka
 Program posiada na stałe zdefiniowane miejsca w których powinna znaleźć się końcówka pisaka.
@@ -39,6 +55,8 @@ Należy usunąć uchwyt zawieszki ozdoby.
 
 ### Montaż
 Bombkę należy zamontować tak, by oś lewego uchwytu znalazła się w środku ozdoby. Następnie należy docisnąć bombkę prawym uchwytem zwracając uwagę na to, by była ona możliwie wycentrowana. 
+
+![Christmas ball installation](readme-data/christmas-ball-installation.jpg)
 
 # Edytor wzorów
 Dla modelu został przygotowany dedykowany edytor pozwalający na prostą edycję wzorów, które mają zostać nadrukowane na ozdobie. Edytor ten jest dostępny jako aplikacja webowa. Aby go uruchomić należy otworzyć plik `Edytor.html` za pomocą przeglądarki internetowej. Edytor został przygotowany z myślą o przeglądarkach opartych na silniku Chromium.
@@ -57,11 +75,30 @@ Po przeniesieniu instrukcji do programu dla brick'a można uruchomić **główny
 Urządzenie samo się skalibruje i przystąpi do druku. Podczas drukowania na ekranie wyświetlany jest postęp operacji.
 Koniec operacji drukowania zostanie zasygnalizowany dźwiękowo. Możesz teraz wyjąć swoją ozdobę!
 
+# Rozwiązywanie problemów
+### 1. Silnik poruszający pisakiem nie działa poprawnie
+Jeżeli średni silnik podczas fazy 'Setup' przemieszcza pisak w kierunku ozdoby to działa on na odwrót. Podczas testów zdarzyło się to raz i nie udało mi się powtórzyć tego dziwnego błędu.
+Aby naprawić ten błąd należy zmodyfikować znak 3 zaznaczonych poniżej wartości w programie brick'a. 
+
+Podprogram `SetupVariables` (-130 -> 130; -155 -> 155)
+
+![SetupVariables](readme-data/mid-engine-err-2.png)
+
+Podprogram `SetupDevices` (1 -> -1)
+
+![SetupVariables](readme-data/mid-engine-err-1.png)
+
+### 2. Pisak w pozycji 'DOWN' nie dotyka bombki / w pozycji 'UP' dotyka bombkę
+Należy osadzić pisak niżej/wyżej w uchwycie. Jeżeli pomimo dostodowania jego pozycji nadal nie działa zadowalająco możliwa jest zmiana pozycji głowicy w kodzie brick'a. 
+Aby dostosować te wartości należy przejść do podprogramu `SetupVariables` i zmienić zaznaczone poniżej wartości.
+
+![SetupVariables](readme-data/mid-engine-err-2.png)
+
 ---
 
 # Ścieżka głowicy - drukarka czy ploter?
-Podczas projektowania modelu testowałem różne sposoby generowania ścieżki. Każdy algorytm debugowany był przy pomocy dekodera kodu, który zaznaczał każde przemieszczenie głowicy w formie linii. 
-Każdy ruch pisaka oznaczany jest kołem odpowiedniego koloru.
+Podczas projektowania modelu testowałem różne sposoby generowania ścieżki. Każdy algorytm sprawdzony został przy pomocy dekodera kodu, który zaznacza każde przemieszczenie głowicy w formie linii. 
+Każdy ruch pisaka (opuszczenie lub podniesienie) oznaczany jest kołem odpowiedniego koloru.
 
 ### HLBL - Horizontal Line By Line
 Pierwszym, podstawowym sposobem wyznaczania ścieżki głowicy była metoda HLBL. Wydaje się ona najprostszym i oczywistym sposobem na łatwe przeniesienie wzoru na bombkę.
@@ -80,9 +117,9 @@ Ze względu na nieprzewidywalność wartości przesunięcia metoda ta została o
 
 ### HVP - Horizontal - Vertical - Point
 Jeszcze zanim zdążyłem prztestować w praktyce algorytm HLBL, który z założenia miał działać bezbłędnie przystąpiłem do sformułowania i implementacji bardziej złożonego algorytmu - HVP.
-Algorytm powstał z myślą o ograniczeniu ilości ruchów głowicy i pisaka do minimum. Polega na wyszukaniu w obrazie kolejno linii horyzontalnych, wertykalnych a na koniec pojedyńczych punktów.
+Algorytm powstał z myślą o ograniczeniu ilości ruchów głowicy i pisaka do minimum. Polega na wyszukaniu w obrazie kolejno linii horyzontalnych, wertykalnych i pojedyńczych punktów.
 W kolejnym kroku linie te są analizowane i priorytetyzowane pod względem długości, tak by nie zdarzyła się sytuacja, gdy np blok pikseli 3x5 został namalowany pięcioma liniami a nie trzema.
-Ostatnim krokiem jest usunięcie linii których piksele pokrywają się w całości z pikelami wypełnionymi przez inne linie. Oczywiście według uprzednio ustalonego priorytetu.
+Ostatnim krokiem jest usunięcie linii których piksele pokrywają się w całości z pikselami wypełnionymi przez inne linie, oczywiście według uprzednio ustalonego priorytetu.
 Algorytm dopuszcza krzyżowanie się linii horyzontalnych i wertykalnych.
 W momencie implementacji metody HVP założenia projektu nie pozwalały na ruch głowicy w lewo/w górę inny niż do pozycji 0, dlatego też każda linia zaczyna się od krawędzi ekranu. 
 Ostateczna wersja algorytmu miała optymalizować ścieżkę głowicy pomiędzy kolejnymi liniami. 

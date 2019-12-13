@@ -116,9 +116,13 @@ export default class VisualCodeDecoder {
             }
 
             if (lIns === CodeGenerator.INS_RST_VERTICAL || lIns === CodeGenerator.INS_RST_HORIZONTAL) {
-                this.canvas.stroke(255, 255, 0, 100);
+                this.canvas.stroke(255, 255, 0, 50);
             } else {
                 this.canvas.stroke(penDown * 255, 255, !penDown * 255, 255);
+            }
+
+            if (penDown === false) {
+                this.canvas.stroke(255, 0, 255, 20);
             }
 
             this.canvas.line(
@@ -152,9 +156,9 @@ export default class VisualCodeDecoder {
 
         this.canvas.fill(0);
         this.canvas.noStroke();
-        this.canvas.text("Step " + step + "/" + code.length, 10, 210);
-        this.canvas.text("Instruction: " + lIns + " / " + lArg, 10, 190);
-        this.canvas.text("Path length: " + this.countPathLength(code, step), 100, 210);
+        // this.canvas.text("Step " + step + "/" + code.length, 10, 210);
+        // this.canvas.text("Instruction: " + lIns + " / " + lArg, 10, 190);
+        this.canvas.text("Path length: " + this.countPathLength(code, step), 10, 210);
     }
 
     countPathLength(code: number[], step: number): number {
