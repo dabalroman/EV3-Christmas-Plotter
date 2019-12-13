@@ -7,12 +7,20 @@ Projekt składa się z 3 zasadniczych elementów:
 - Edytora wzorów
 - Oprogramowania dla brick'a EV3
 
-# Dodatkowe materiały
+### Spis treści
+- [Pisak](#pisak)
+- [Bombki](#bombki-choinkowe)
+- [Edytor wzorów](#edytor-wzorw)
+- [Drukowanie](#drukowanie-wzoru)
+- [Rozwiązywanie problemów](#rozwizywanie-problemw)
+- [Dodatek: Drukarka czy ploter?](#cieka-gowicy---drukarka-czy-ploter)
+
+### Dodatkowe materiały
 - Gumka recepturka (gumka z zestawu może być zbyt krótka)
 - Pisak permanentny, najlepiej w kolorze kontastującym z barwą bombek
 - Bombki choinkowe o średnicy 6 cm
 
-# Budowa modelu
+### Budowa modelu
 Instrukcje potrzebne do budowy modelu dostępne są jako plik pdf.
 Wszystkie elementy wymagane do budowy zawarte są w zestawie LEGO® MINDSTORMS® EV3 31313.
 
@@ -21,8 +29,8 @@ Pisak powinien pisać w kolorze dobrze kontrastującym z barwą bombki.
 
 ![Marker pen colours](readme-data/marker-pen-samples.jpg)
 
-Widoczność pisaka na powierzchni bombki została zaznaczona jako '+' w poniższej tabeli.
-Najlepszy kontrast oznaczono jako 'X'.
+Widoczność pisaka na powierzchni bombki została oznaczona jako '+' w poniższej tabeli.
+Najlepszy kontrast oznaczono znakiem 'X'.
 
 | Pisak \\ Bombka | Złota | Złota mat | Srebrna | Srebrna Mat | Niebieska |
 | :---------------|:-----:|:---------:|:-------:|:-----------:|:---------:|
@@ -35,8 +43,8 @@ Najlepszy kontrast oznaczono jako 'X'.
 
 > Uwaga! Pisaki permanentne bardzo szybko wysychają, należy zamykać je bezzwłocznie po każdym drukowaniu.
 
-### Montaż
-Pisak montujemy przy pomocy gumki w uchwycie.
+### Montaż pisaka
+Pisak montujemy przy pomocy gumki w uchwycie jak przedstawiono poniżej.
 
 ![Marker pen installation](readme-data/marker-pen-installation.jpg)
 
@@ -53,7 +61,7 @@ Nadrukowane wzory są lepiej widoczne na bombkach lśniących niż na matowych.
 Przed przystąpieniem do drukowania wzoru bombki należy umyć, by pozbyć się wszystkich zabrudzeń z ich powierzchni. Czyste kule lepiej trzymają się gumowych opon oraz łatwiej jest po nich pisać.
 Należy usunąć uchwyt zawieszki ozdoby.
 
-### Montaż
+### Montaż bombki
 Bombkę należy zamontować tak, by oś lewego uchwytu znalazła się w środku ozdoby. Następnie należy docisnąć bombkę prawym uchwytem zwracając uwagę na to, by była ona możliwie wycentrowana. 
 
 ![Christmas ball installation](readme-data/christmas-ball-installation.jpg)
@@ -61,7 +69,7 @@ Bombkę należy zamontować tak, by oś lewego uchwytu znalazła się w środku 
 # Edytor wzorów
 Dla modelu został przygotowany dedykowany edytor pozwalający na prostą edycję wzorów, które mają zostać nadrukowane na ozdobie. Edytor ten jest dostępny jako aplikacja webowa. Aby go uruchomić należy otworzyć plik `Edytor.html` za pomocą przeglądarki internetowej. Edytor został przygotowany z myślą o przeglądarkach opartych na silniku Chromium.
 
-# Przenoszenie wzoru z edytora do oprogramowania brick'a
+### Przenoszenie wzoru z edytora do oprogramowania brick'a
 Aby przenieść zaprojektowany w edytorze wzór należy użyć przycisku `Pobierz wzór`. Wzór zostanie przekonwertowany na instrukcje dla brick'a. Instrukcje te są automatycznie kopiowane do schowka. W razie gdyby kopiowanie nie powiodło się należy zrobić to ręcznie zaznaczając całość instrukcji z pola tekstowego. 
 Dane zostały przygotowane w taki sposób, że oprogramowanie EV3 rozpozna je jako blok tablicy.
 Po uruchomieniu programu dla brick'a dostarczonego w projekcie należy otworzyć podprogram `Instructions`. W środku znajduje się tylko blok start oraz tablica z instrukcjami. Należy usunąć blok tablicy i wkleić ten z nowymi instrukcjami.
