@@ -13,6 +13,9 @@ export default class PlotterGrid {
     //Cells to degree ratio. Real machine resolution is 1080 x 252 deg.
     static EDITOR_TO_PLOTTER_RATIO = 9;
 
+    //Offset to '0' char
+    static ENCODER_CHAR_OFFSET = 48;
+
     /**
      * @type {Dimension} size
      */
@@ -198,25 +201,49 @@ export default class PlotterGrid {
     }
 
     save(): string {
-        let s = JSON.stringify(this.grid);
+        let s = '';
+
+        let temp = 0;
+        for (let y = 0; y < this.size.height; y++) {
+            for (let x = 0; x < this.size.width; x++) {
+                temp = (temp << 1) | this.grid[x][y];
+
+                if (x % 6 === 5 || x === this.size.width - 1) {
+                    temp += PlotterGrid.ENCODER_CHAR_OFFSET;
+                    temp = (temp === 63) ? 120 : temp;
+
+                    s += String.fromCharCode(temp);
+                    temp = 0;
+                }
+            }
+        }
+
         localStorage.setItem('grid', s);
         return s;
     }
 
-    load(serialized = '') {
-        if (serialized === '') {
-            serialized = localStorage.getItem('grid');
+    load(encoded = '') {
+        if (encoded === '') {
+            encoded = localStorage.getItem('grid');
 
-            if (serialized === '') {
+            if (encoded === null || encoded === '') {
                 return;
             }
         }
 
-        let data = JSON.parse(serialized);
+        let temp = 0;
+        for (let y = 0; y < this.size.height; y++) {
+            for (let x = 0; x < this.size.width; x++) {
+                if (x % 6 === 0) {
+                    temp = encoded.charCodeAt(0);
+                    temp = (temp === 120) ? 63 : temp;
+                    temp -= PlotterGrid.ENCODER_CHAR_OFFSET;
 
-        for (let w = 0; w < this.size.width; ++w) {
-            for (let h = 0; h < this.size.height; ++h) {
-                this.grid[w][h] = data[w][h];
+                    encoded = encoded.substr(1);
+                }
+
+                this.grid[x][y] = (temp & 32) && true;
+                temp = temp << 1;
             }
         }
 
