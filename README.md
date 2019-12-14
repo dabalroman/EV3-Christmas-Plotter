@@ -104,7 +104,7 @@ Aby dostosować te wartości należy przejść do podprogramu `SetupVariables` i
 
 ---
 
-# Ścieżka głowicy - drukarka czy ploter?
+# Dodatek: Ścieżka głowicy - drukarka czy ploter?
 Podczas projektowania modelu testowałem różne sposoby generowania ścieżki. Każdy algorytm sprawdzony został przy pomocy dekodera kodu, który zaznacza każde przemieszczenie głowicy w formie linii. 
 Każdy ruch pisaka (opuszczenie lub podniesienie) oznaczany jest kołem odpowiedniego koloru.
 
@@ -149,7 +149,7 @@ Na poniższej wizualizacji z dekodera widać ostateczną ścieżkę głowicy.
 ![VLBL](readme-data/gen-vlbl.png)
 
 Pomimo możliwości drukowania w dwóch kierunkach (góra - dół i dół - góra) wszystkie linie drukowane są od góry do dołu.
-Bierze się to z luzu na osi poruszającej głowicę z pisakiem. Niestety silniki LEGO nie są zbyt dokładne jeśli chodzi o ich ruchy, pomimo stałego odczytu z enkodera wyjście silnika może wykonać pewien obrót. 
+Bierze się to z luzu na osi poruszającej głowicę z pisakiem. Niestety silniki LEGO nie są zbyt dokładne jeśli chodzi o ich ruchy, pomimo stałego odczytu z enkodera wyjście silnika może zostać lekko obrócone. 
 Luz ten jest widoczny szczególnie w sytuacji, gdy silnik musi zmierzyć się z pewną siłą. W tym przypadku ponownie chodzi o siłę tarcia o ozdobę. 
 Przez kombinację luzu i oporu pisaka linie rysowane od góry do dołu przesunięte są lekko ku górze a linie rysowane od dołu do góry przesunięte są analogicznie w dół.
 Zestawienie takich linii koło siebie na wydruku daje mizerny efekt, szczególnie przy drukowaniu szczegółowych kształtów, takich jak na przykład litery.
