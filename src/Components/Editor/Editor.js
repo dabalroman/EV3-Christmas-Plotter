@@ -38,6 +38,7 @@ export default class Editor extends Component {
                         cellSize={8}
                         isVisualCodeDecoderUpdateNeeded={this.isVisualCodeDecoderUpdateNeeded}
                         visualCodeDecoderStep={this.state.visualCodeDecoderStep}
+                        ignoreInput={this.props.modalActive}
                     />
                 </div>
             </div>

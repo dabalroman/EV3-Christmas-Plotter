@@ -19,6 +19,9 @@ const bottomButtonBar = (props) => {
                     props.toggleSphereRotation();
                 }}>Włącz / Wyłącz obrót podglądu</Button>
                 <Button onClick={() => {
+                    props.showLoadSaveModal();
+                }}>Zapisz / Wczytaj obrazek</Button>
+                <Button onClick={() => {
                     props.plotterGrid().generatePlotterCode(PlotterGrid.GEN_VLBL);
                     props.showGetCodeModal();
                 }}

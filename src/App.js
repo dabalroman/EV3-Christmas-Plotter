@@ -8,12 +8,14 @@ import Editor from "./Components/Editor/Editor";
 import BottomButtonBar from "./Components/BottomButtonBar/BottomButtonBar";
 import Modal from "./Components/UI/Modal/Modal";
 import GetCodeModal from "./Components/GetCodeModal/GetCodeModal";
+import LoadSaveModal from "./Components/LoadSaveModal/LoadSaveModal";
 
 class App extends Component {
     state = {
         serializedPlotterGrid: "",
         sphereRotation: true,
-        showGetCodeModal: false
+        showGetCodeModal: false,
+        showLoadSaveModal: false
     };
 
     /**
@@ -53,6 +55,7 @@ class App extends Component {
                 <Editor
                     getPlotterGrid={this.getPlotterGrid}
                     getRenderedPlotterGrid={this.getRenderedPlotterGrid}
+                    modalActive={this.state.showGetCodeModal || this.state.showLoadSaveModal}
                 />
                 <Sphere
                     renderedPlotterGrid={this.getRenderedPlotterGrid}
@@ -61,6 +64,7 @@ class App extends Component {
                 <BottomButtonBar
                     plotterGrid={this.getPlotterGrid}
                     showGetCodeModal={() => this.setState({showGetCodeModal: true})}
+                    showLoadSaveModal={() => this.setState({showLoadSaveModal: true})}
                     toggleSphereRotation={() => this.setState({sphereRotation: !this.state.sphereRotation})}
                 />
                 <Modal
@@ -69,6 +73,14 @@ class App extends Component {
                 >
                     <GetCodeModal
                         code={this.plotterGrid.plotterCodeBlock}
+                    />
+                </Modal>
+                <Modal
+                    visible={this.state.showLoadSaveModal}
+                    hideModal={() => this.setState({showLoadSaveModal: false})}
+                >
+                    <LoadSaveModal
+                        plotterGrid={this.getPlotterGrid}
                     />
                 </Modal>
 

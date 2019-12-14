@@ -32,7 +32,12 @@ export default function GridEditorP5(p) {
     /**
      * @type {boolean}
      */
-    let showCodeDecoder = true;
+    let ignoreInput = false;
+
+    /**
+     * @type {boolean}
+     */
+    let showCodeDecoder = false;
 
     /**
      * @type {boolean}
@@ -71,10 +76,18 @@ export default function GridEditorP5(p) {
     };
 
     p.mouseDragged = () => {
+        if (ignoreInput) {
+            return;
+        }
+
         p.mousePressed();
     };
 
     p.mousePressed = () => {
+        if (ignoreInput) {
+            return;
+        }
+
         lastClickVector.x = p.mouseX;
         lastClickVector.y = p.mouseY;
 
@@ -86,6 +99,7 @@ export default function GridEditorP5(p) {
         renderedPlotterGrid = props.renderedPlotterGrid();
         cellSize = props.cellSize;
         visualCodeDecoderStep = props.visualCodeDecoderStep;
+        ignoreInput = props.ignoreInput;
 
         if (isVisualCodeDecoderUpdateNeeded === false) {
             isVisualCodeDecoderUpdateNeeded = props.isVisualCodeDecoderUpdateNeeded();
