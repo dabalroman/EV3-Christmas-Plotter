@@ -6,6 +6,8 @@ import PlotterGrid from "./PlotterGrid/PlotterGrid";
 import Sphere from "./Components/Sphere/Sphere";
 import Editor from "./Components/Editor/Editor";
 import BottomButtonBar from "./Components/BottomButtonBar/BottomButtonBar";
+import Modal from "./Components/UI/Modal/Modal";
+import GetCodeModal from "./Components/GetCodeModal/GetCodeModal";
 
 class App extends Component {
     state = {
@@ -66,6 +68,7 @@ class App extends Component {
                     plotterGrid={this.getPlotterGrid}
                     toggleSphereRotation={this.toggleSphereRotation}
                 />
+                <Modal><GetCodeModal/></Modal>
                 <div>
                     <textarea onChange={(e) => {
                         this.setState({
