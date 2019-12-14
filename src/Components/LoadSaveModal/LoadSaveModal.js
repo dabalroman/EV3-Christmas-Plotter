@@ -7,6 +7,16 @@ export default class LoadSaveModal extends Component {
         code: ''
     };
 
+    componentDidMount(): void {
+        this.setState({
+            code: localStorage.getItem('code')
+        });
+    }
+
+    componentWillUnmount(): void {
+        localStorage.setItem('code', this.state.code);
+    }
+
     render(props) {
         return (
             <div className={Styles.container}>
