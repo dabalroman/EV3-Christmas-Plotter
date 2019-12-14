@@ -12,7 +12,8 @@ import GetCodeModal from "./Components/GetCodeModal/GetCodeModal";
 class App extends Component {
     state = {
         serializedPlotterGrid: "",
-        sphereRotation: true
+        sphereRotation: true,
+        showGetCodeModal: false
     };
 
     /**
@@ -27,7 +28,6 @@ class App extends Component {
         this.plotterGrid = new PlotterGrid(120, 28);
         this.getPlotterGrid = this.getPlotterGrid.bind(this);
         this.getRenderedPlotterGrid = this.getRenderedPlotterGrid.bind(this);
-        this.toggleSphereRotation = this.toggleSphereRotation.bind(this);
     }
 
     /**
@@ -45,12 +45,6 @@ class App extends Component {
         return this.renderedPlotterGrid;
     }
 
-    toggleSphereRotation() {
-        this.setState({
-            sphereRotation: !this.state.sphereRotation
-        });
-    }
-
     render() {
         return (
             <div className={Styles.app} onContextMenu={(e) => {
@@ -66,9 +60,18 @@ class App extends Component {
                 />
                 <BottomButtonBar
                     plotterGrid={this.getPlotterGrid}
-                    toggleSphereRotation={this.toggleSphereRotation}
+                    showGetCodeModal={() => this.setState({showGetCodeModal: true})}
+                    toggleSphereRotation={() => this.setState({sphereRotation: !this.state.sphereRotation})}
                 />
-                <Modal><GetCodeModal/></Modal>
+                <Modal
+                    visible={this.state.showGetCodeModal}
+                    hideModal={() => this.setState({showGetCodeModal: false})}
+                >
+                    <GetCodeModal
+                        code={this.plotterGrid.plotterCodeBlock}
+                    />
+                </Modal>
+
                 <div>
                     <textarea onChange={(e) => {
                         this.setState({
@@ -77,12 +80,12 @@ class App extends Component {
                     }} value={this.state.serializedPlotterGrid}/>
                     <button onClick={() => {
                         this.setState({
-                            serializedPlotterGrid: this.plotterGrid.serialize()
+                            serializedPlotterGrid: this.plotterGrid.save()
                         });
                     }}>Get
                     </button>
                     <button onClick={() => {
-                        this.plotterGrid.deserialize(this.state.serializedPlotterGrid);
+                        this.plotterGrid.load(this.state.serializedPlotterGrid);
                         this.setState({
                             canvasUpdateNeeded: true
                         });

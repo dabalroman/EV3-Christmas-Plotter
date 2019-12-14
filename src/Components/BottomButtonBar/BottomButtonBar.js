@@ -20,6 +20,7 @@ const bottomButtonBar = (props) => {
                 }}>Włącz / Wyłącz obrót podglądu</Button>
                 <Button onClick={() => {
                     props.plotterGrid().generatePlotterCode(PlotterGrid.GEN_VLBL);
+                    props.showGetCodeModal();
                 }}
                 >
                     Pobierz kod dla EV3

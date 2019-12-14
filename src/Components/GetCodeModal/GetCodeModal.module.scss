@@ -4,13 +4,13 @@
     grid-template-columns: auto auto;
 }
 
-video {
+.video {
     display: block;
     margin: 0 auto;
     border: 2px solid #DDDDDD;
 }
 
-p {
+.text {
     margin-top: 0;
     text-align: justify;
 }
@@ -19,6 +19,7 @@ p {
     text-align: center;
 }
 
-textarea {
+.textarea {
     width: 100%;
+    resize: none;
 }
