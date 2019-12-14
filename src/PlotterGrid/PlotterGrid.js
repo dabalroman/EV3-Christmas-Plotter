@@ -162,7 +162,6 @@ export default class PlotterGrid {
         }
 
         this.plotterCode = plotterCodeGenerator.generateCode(this.grid);
-        console.log(this.plotterCode);
     }
 
     /**

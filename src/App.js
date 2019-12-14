@@ -9,7 +9,8 @@ import BottomButtonBar from "./Components/BottomButtonBar/BottomButtonBar";
 
 class App extends Component {
     state = {
-        serializedPlotterGrid: ""
+        serializedPlotterGrid: "",
+        sphereRotation: true
     };
 
     /**
@@ -24,6 +25,7 @@ class App extends Component {
         this.plotterGrid = new PlotterGrid(120, 28);
         this.getPlotterGrid = this.getPlotterGrid.bind(this);
         this.getRenderedPlotterGrid = this.getRenderedPlotterGrid.bind(this);
+        this.toggleSphereRotation = this.toggleSphereRotation.bind(this);
     }
 
     /**
@@ -41,6 +43,12 @@ class App extends Component {
         return this.renderedPlotterGrid;
     }
 
+    toggleSphereRotation() {
+        this.setState({
+            sphereRotation: !this.state.sphereRotation
+        });
+    }
+
     render() {
         return (
             <div className={Styles.app} onContextMenu={(e) => {
@@ -52,34 +60,12 @@ class App extends Component {
                 />
                 <Sphere
                     renderedPlotterGrid={this.getRenderedPlotterGrid}
+                    rotation={this.state.sphereRotation}
                 />
                 <BottomButtonBar
                     plotterGrid={this.getPlotterGrid}
+                    toggleSphereRotation={this.toggleSphereRotation}
                 />
-                <div className={Styles.debuggerControls}>
-                    <button onClick={() => {
-                        this.setState({
-                            visualCodeDecoderUpdateNeeded: true,
-                            visualCodeDecoderStep: this.state.visualCodeDecoderStep + 1
-                        });
-                    }}>
-                        +
-                    </button>
-                    <span onWheel={(e) => {
-                        this.setState({
-                            visualCodeDecoderUpdateNeeded: true,
-                            visualCodeDecoderStep: this.state.visualCodeDecoderStep - e.deltaY / 100
-                        });
-                    }}> Step {this.state.visualCodeDecoderStep} </span>
-                    <button onClick={() => {
-                        this.setState({
-                            visualCodeDecoderUpdateNeeded: true,
-                            visualCodeDecoderStep: this.state.visualCodeDecoderStep - 1
-                        });
-                    }}>
-                        -
-                    </button>
-                </div>
                 <div>
                     <textarea onChange={(e) => {
                         this.setState({
