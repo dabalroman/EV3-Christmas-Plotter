@@ -47,8 +47,8 @@ export default class CodeGenerator {
     generateCode(plotterGrid) {
     };
 
-    createLegoMindstormsDataBlock(code: number[]): string {
-        let blockPattern = '﻿<MergeScript xmlns="http://www.ni.com/DiagramSdk.xsd">\n' +
+    static createLegoMindstormsDataBlock(code: number[]): string {
+        let blockPattern = '<MergeScript xmlns="http://www.ni.com/DiagramSdk.xsd">\n' +
             '    <MergeData Key="SerializationReason" Value="Copy" />\n' +
             '    <MergeGroup Path=".">\n' +
             '        <MergeItem Path="." IsPrimary="True">' +

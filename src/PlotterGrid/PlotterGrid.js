@@ -2,6 +2,8 @@ import Dimension from "../Utils/Dimension";
 import CodeGenLineByLineHoriz from "./CodeGenerators/CodeGenLineByLineHoriz";
 import CodeGenHorizVertPoint from "./CodeGenerators/CodeGenHorizVertPoint";
 import CodeGenLineByLineVert from "./CodeGenerators/CodeGenLineByLineVert";
+import CodeGenerator from "./CodeGenerators/CodeGenerator";
+import Utils from "../Utils/Utils";
 
 export default class PlotterGrid {
     static GEN_HLBL = 0;
@@ -18,15 +20,21 @@ export default class PlotterGrid {
 
     /**
      * Data structure
-     * @type {Boolean[][]} grid
+     * @type {boolean[][]} grid
      */
     grid;
 
     /**
      * Generated plotter code
-     * @type {Number[]}
+     * @type {number[]}
      */
     plotterCode;
+
+    /**
+     * Generated plotter code as block
+     * @type {string}
+     */
+    plotterCodeBlock;
 
     /**
      * Integer for change tracking
@@ -36,32 +44,13 @@ export default class PlotterGrid {
 
     /**
      * Create PlotterGrid
-     * @param {Number} width
-     * @param {Number} height
+     * @param {number} width
+     * @param {number} height
      */
     constructor(width, height) {
         this.setSize(width, height);
 
-        this.setCellState(1, 0);
-        this.setCellState(2, 0);
-        this.setCellState(3, 0);
-        this.setCellState(7, 0);
-        this.setCellState(8, 0);
-        this.setCellState(9, 0);
-        this.setCellState(13, 0);
-        this.setCellState(14, 0);
-        this.setCellState(3, 1);
-        this.setCellState(4, 1);
-        this.setCellState(5, 1);
-        this.setCellState(9, 1);
-        this.setCellState(12, 1);
-        this.setCellState(13, 1);
-
-        //Control points
-        this.setCellState(0, 0);
-        this.setCellState(119, 0);
-        this.setCellState(0, 27);
-        this.setCellState(119, 27);
+        this.load();
     }
 
     /**
@@ -162,6 +151,8 @@ export default class PlotterGrid {
         }
 
         this.plotterCode = plotterCodeGenerator.generateCode(this.grid);
+        this.plotterCodeBlock = CodeGenerator.createLegoMindstormsDataBlock(this.plotterCode);
+        Utils.copyToClipboard(this.plotterCodeBlock);
     }
 
     /**
@@ -206,13 +197,13 @@ export default class PlotterGrid {
         }
     }
 
-    serialize(): string {
+    save(): string {
         let s = JSON.stringify(this.grid);
         localStorage.setItem('grid', s);
         return s;
     }
 
-    deserialize(serialized: string) {
+    load(serialized = '') {
         if (serialized === '') {
             serialized = localStorage.getItem('grid');
 

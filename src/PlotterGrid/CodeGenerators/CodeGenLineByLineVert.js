@@ -1,6 +1,5 @@
 import CodeGenerator from "./CodeGenerator";
 import PlotterGrid from "../PlotterGrid";
-import Utils from "../../Utils/Utils";
 
 export default class CodeGenLineByLineVert extends CodeGenerator {
     generateCode(plotterGrid: Boolean[][]): number[] {
@@ -14,8 +13,6 @@ export default class CodeGenLineByLineVert extends CodeGenerator {
         this.generateCodeForVerticalLinesAndDots(verticalLines);
 
         this.code.push(CodeGenLineByLineVert.INS_DONE);
-
-        Utils.copyToClipboard(this.createLegoMindstormsDataBlock(this.code));
 
         return this.code;
     }
