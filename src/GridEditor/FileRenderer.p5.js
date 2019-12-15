@@ -20,7 +20,7 @@ export default function FileRendererP5(p) {
         p.noFill();
     };
 
-    p.draw = () => {
+    const drawCanvas = () => {
         p.background(255);
         p.stroke(0);
 
@@ -36,9 +36,11 @@ export default function FileRendererP5(p) {
     };
 
     p.myCustomRedrawAccordingToNewPropsHandler = (props) => {
+        console.log("PROPS", props);
         plotterGrid = props.plotterGrid();
 
         if (props.saveCanvas !== undefined && props.saveCanvas() === true) {
+            drawCanvas();
             p.saveCanvas(canvas, 'christmass_ball', 'png');
         }
     };

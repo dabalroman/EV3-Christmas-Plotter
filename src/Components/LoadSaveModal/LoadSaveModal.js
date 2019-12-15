@@ -1,13 +1,10 @@
 import React, {Component} from 'react';
 import Styles from './LoadSaveModal.module.css';
 import Button from "../UI/Button/Button";
-import P5Wrapper from "react-p5-wrapper";
-import FileRendererP5 from "../../GridEditor/FileRenderer.p5";
 
 export default class LoadSaveModal extends Component {
     state = {
-        code: '',
-        saveCanvas: false
+        code: ''
     };
 
     componentDidMount(): void {
@@ -48,7 +45,7 @@ export default class LoadSaveModal extends Component {
                     }}>Wczytaj obrazek z kodu</Button>
                     <Button onClick={() => {
                         console.log("SAVE");
-                        this.setState({saveCanvas: true})
+                        this.props.saveCanvas();
                     }}>Zapisz obrazek</Button>
                 </div>
                 <div>
@@ -58,21 +55,6 @@ export default class LoadSaveModal extends Component {
                         onChange={(event) => {
                             this.setState({code: event.target.value})
                         }}/>
-                    <div className={Styles.fileSaveRenderer}>
-                        <P5Wrapper
-                            sketch={FileRendererP5}
-                            plotterGrid={this.props.plotterGrid}
-                            saveCanvas={() => {
-                                let temp = this.state.saveCanvas;
-
-                                if (temp) {
-                                    this.setState({saveCanvas: !temp});
-                                }
-
-                                return temp;
-                            }}
-                        />
-                    </div>
                 </div>
             </div>
         )

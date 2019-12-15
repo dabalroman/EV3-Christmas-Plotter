@@ -9,13 +9,15 @@ import BottomButtonBar from "./Components/BottomButtonBar/BottomButtonBar";
 import Modal from "./Components/UI/Modal/Modal";
 import GetCodeModal from "./Components/GetCodeModal/GetCodeModal";
 import LoadSaveModal from "./Components/LoadSaveModal/LoadSaveModal";
+import FileRenderer from "./Components/FileRenderer/FileRenderer";
 
 class App extends Component {
     state = {
         serializedPlotterGrid: "",
         sphereRotation: true,
         showGetCodeModal: false,
-        showLoadSaveModal: false
+        showLoadSaveModal: false,
+        saveCanvas: false
     };
 
     /**
@@ -81,8 +83,23 @@ class App extends Component {
                 >
                     <LoadSaveModal
                         plotterGrid={this.getPlotterGrid}
+                        saveCanvas={() => {
+                            this.setState({saveCanvas: true})
+                        }}
                     />
                 </Modal>
+                <FileRenderer
+                    plotterGrid={this.getPlotterGrid}
+                    saveCanvas={() => {
+                        let temp = this.state.saveCanvas;
+
+                        if (temp) {
+                            this.setState({saveCanvas: !temp});
+                        }
+
+                        return temp;
+                    }}
+                />
             </div>
         );
     }
