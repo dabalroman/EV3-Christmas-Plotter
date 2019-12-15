@@ -91,14 +91,14 @@ export default class PlotterGridInteractiveRenderer {
      */
     renderGrid() {
         this.gridCanvas.background(240);
-
+        this.gridCanvas.fill(70, 70, 200);
+        
         for (let w = 0; w < this.plotterGridSize.width; w++) {
             for (let h = 0; h < this.plotterGridSize.height; h++) {
                 if (!this.plotterGrid.getCellState(w, h)) {
                     continue;
                 }
 
-                this.gridCanvas.fill(70, 70, 200);
                 this.gridCanvas.rect(w * this.cellSize, h * this.cellSize, this.cellSize, this.cellSize);
             }
         }
