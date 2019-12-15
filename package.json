@@ -1,7 +1,24 @@
 {
-  "name": "ev3plotter",
-  "version": "0.1.0",
-  "private": true,
+  "name": "christmas_ball_decorator",
+  "version": "1.0.0",
+  "private": false,
+  "author": {
+    "name": "Roman Dąbal",
+    "email": "dabalroman@gmail.com",
+    "url": "https://github.com/dabalroman"
+  },
+  "homepage": "https://github.com/dabalroman/EV3-Christmas-Plotter",
+  "license": "MIT",
+  "keywords": [
+    "editor",
+    "lego",
+    "ev3",
+    "christmas",
+    "christmas ball",
+    "decorator"
+  ],
+  "description": "Pattern editor for Christmas Ball Decorator",
+  "repository": "github:dabalroman/EV3-Christmas-Plotter",
   "dependencies": {
     "p5": "^0.10.2",
     "react": "^16.10.2",
@@ -20,9 +37,9 @@
   },
   "browserslist": {
     "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
+      "> 1%",
+      "last 2 versions",
+      "not ie <= 8"
     ],
     "development": [
       "last 1 chrome version",
