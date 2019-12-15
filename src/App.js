@@ -83,27 +83,6 @@ class App extends Component {
                         plotterGrid={this.getPlotterGrid}
                     />
                 </Modal>
-
-                <div>
-                    <textarea onChange={(e) => {
-                        this.setState({
-                            serializedPlotterGrid: e.target.value
-                        });
-                    }} value={this.state.serializedPlotterGrid}/>
-                    <button onClick={() => {
-                        this.setState({
-                            serializedPlotterGrid: this.plotterGrid.save()
-                        });
-                    }}>Get
-                    </button>
-                    <button onClick={() => {
-                        this.plotterGrid.load(this.state.serializedPlotterGrid);
-                        this.setState({
-                            canvasUpdateNeeded: true
-                        });
-                    }}>Set
-                    </button>
-                </div>
             </div>
         );
     }
