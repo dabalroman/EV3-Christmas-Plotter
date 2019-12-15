@@ -16,7 +16,7 @@ class App extends Component {
         serializedPlotterGrid: "",
         sphereRotation: true,
         showGetCodeModal: false,
-        showLoadModal: true,
+        showLoadModal: false,
         saveCanvas: false,
         loadCanvas: false,
     };
