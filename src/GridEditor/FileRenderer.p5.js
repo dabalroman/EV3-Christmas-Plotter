@@ -36,7 +36,6 @@ export default function FileRendererP5(p) {
     };
 
     p.myCustomRedrawAccordingToNewPropsHandler = (props) => {
-        console.log("PROPS", props);
         plotterGrid = props.plotterGrid();
 
         if (props.saveCanvas !== undefined && props.saveCanvas() === true) {
