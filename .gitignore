@@ -22,8 +22,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-.css
-.map
+*.module.css
+*.map
 .idea/*
 package-lock.json
 /LPub3D/
