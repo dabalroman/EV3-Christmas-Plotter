@@ -10,11 +10,12 @@ export default function FileRendererP5(p) {
      */
     let plotterGridSize;
 
+    let canvas;
 
     p.setup = () => {
         plotterGridSize = plotterGrid.getSize();
 
-        p.createCanvas(plotterGridSize.width, plotterGridSize.height);
+        canvas = p.createCanvas(plotterGridSize.width, plotterGridSize.height);
         p.noLoop();
         p.noFill();
     };
@@ -36,5 +37,9 @@ export default function FileRendererP5(p) {
 
     p.myCustomRedrawAccordingToNewPropsHandler = (props) => {
         plotterGrid = props.plotterGrid();
+
+        if (props.saveCanvas !== undefined && props.saveCanvas() === true) {
+            p.saveCanvas(canvas, 'christmass_ball', 'png');
+        }
     };
 };
