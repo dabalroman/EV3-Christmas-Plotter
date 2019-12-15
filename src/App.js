@@ -10,6 +10,7 @@ import Modal from "./Components/UI/Modal/Modal";
 import GetCodeModal from "./Components/GetCodeModal/GetCodeModal";
 import LoadModal from "./Components/LoadModal/LoadModal";
 import FileRenderer from "./Components/FileRenderer/FileRenderer";
+import StartupModal from "./Components/StartupModal/StartupModal";
 
 class App extends Component {
     state = {
@@ -17,8 +18,9 @@ class App extends Component {
         sphereRotation: true,
         showGetCodeModal: false,
         showLoadModal: false,
+        showStartupModal: true,
         saveCanvas: false,
-        loadCanvas: false,
+        loadCanvas: false
     };
 
     /**
@@ -95,6 +97,13 @@ class App extends Component {
                         }}
                         hideModal={() => this.setState({showLoadModal: false})}
                     />
+                </Modal>
+
+                <Modal
+                    visible={this.state.showStartupModal}
+                    hideModal={() => this.setState({showStartupModal: false})}
+                >
+                    <StartupModal/>
                 </Modal>
 
                 <FileRenderer
