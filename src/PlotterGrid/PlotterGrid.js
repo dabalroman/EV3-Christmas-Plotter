@@ -52,8 +52,12 @@ export default class PlotterGrid {
      */
     constructor(width, height) {
         this.setSize(width, height);
-
         this.load();
+
+        //Autosave drawing
+        setInterval(() => {
+            this.save()
+        }, 1000 * 30);
     }
 
     /**
