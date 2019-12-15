@@ -22,7 +22,7 @@ const StartupModal = () => {
                 </p>
             </div>
             <div>
-                <video className={Styles.video} height='400' width='450' autoPlay loop>
+                <video className={Styles.video} height='222' width='228' autoPlay loop>
                     <source src={Video} type='video/mp4'/>
                     Nie można odtworzyć wideo.
                 </video>
