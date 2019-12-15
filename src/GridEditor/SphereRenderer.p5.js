@@ -2,6 +2,8 @@ export default function SphereRendererP5(p) {
     let renderedPlotterGrid = null;
     let texture = null;
 
+    let canvas;
+
     /**
      * @type {number}
      */
@@ -27,9 +29,33 @@ export default function SphereRendererP5(p) {
      */
     let currentRotation = 0;
 
+    /**
+     * @type {boolean}
+     */
+    let mouseRotationActive = false;
+
+    /**
+     * @type {number}
+     */
+    let mouseRotationOffset = 0;
+
+    /**
+     * @type {boolean}
+     */
+    let mouseRotationBase = 0;
+
+    /**
+     * @type {boolean}
+     */
+    let startMousePos = 0;
+
+
     p.setup = () => {
         p.setAttributes('antialias', true);
-        p.createCanvas(width, height, p.WEBGL);
+        canvas = p.createCanvas(width, height, p.WEBGL);
+        canvas.mousePressed(mousePressed);
+        canvas.mouseReleased(mouseReleased);
+        canvas.mouseOut(mouseReleased);
         p.frameRate(30);
 
         p.noStroke();
@@ -39,9 +65,6 @@ export default function SphereRendererP5(p) {
     };
 
     p.draw = () => {
-
-        p.orbitControl(2, 2, 2);
-
         if (p.frameCount - lastTextureUpdateFrame >= 3) {
             texture.background(240);
             texture.image(renderedPlotterGrid.graphics, 0, 120);
@@ -53,9 +76,27 @@ export default function SphereRendererP5(p) {
             currentRotation += 0.01;
         }
 
-        p.rotateY(currentRotation);
+        if (mouseRotationActive) {
+            mouseRotationOffset = mouseRotationBase + (getMousePosX() - startMousePos)
+        }
+
+        p.rotateY(currentRotation + mouseRotationOffset);
         p.texture(texture);
         p.sphere(120, 16, 16);
+    };
+
+    const mousePressed = () => {
+        startMousePos = getMousePosX();
+        mouseRotationActive = true;
+    };
+
+    const mouseReleased = () => {
+        mouseRotationBase = mouseRotationOffset;
+        mouseRotationActive = false;
+    };
+
+    const getMousePosX = () => {
+        return p.mouseX / 100;
     };
 
     p.myCustomRedrawAccordingToNewPropsHandler = (props) => {
