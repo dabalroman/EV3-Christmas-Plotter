@@ -67,12 +67,32 @@ Bombkę należy zamontować tak, by oś lewego uchwytu znalazła się w środku 
 ![Christmas ball installation](readme-data/christmas-ball-installation.jpg)
 
 # Edytor wzorów
-Dla modelu został przygotowany dedykowany edytor pozwalający na prostą edycję wzorów, które mają zostać nadrukowane na ozdobie. Edytor ten jest dostępny jako aplikacja webowa. Aby go uruchomić należy otworzyć plik `Edytor.html` za pomocą przeglądarki internetowej. Edytor został przygotowany z myślą o przeglądarkach opartych na silniku Chromium.
+Dla modelu został przygotowany dedykowany edytor pozwalający na prostą edycję wzorów, które mają zostać nadrukowane na ozdobie. Edytor ten jest dostępny jako aplikacja webowa. 
+Aby go uruchomić należy otworzyć plik `index.html` za pomocą przeglądarki internetowej. Edytor został przygotowany z myślą o przeglądarkach opartych na silniku Chromium.
+
+### Edycja obrazu
+- `LPM` - Rysowanie
+- `PPM` - Usuwanie
+
+### Podgląd obrazu
+W prawym górnym rogu ekranu widoczny jest podgląd ozdoby.
+Można go obracać przeciągając go w prawo i w lewo.
+
+![Christmas ball preview](readme-data/preview.png)
+
+### Wczytywanie obrazu
+Aby wczytać obraz należy użyć przycisku `Wczytaj obrazek`. Wczytywany obraz musi być czarno-biały i mieć rozdzielczość 120 x 28 pikseli.
+Gotowe wzory dostępne są w folderze `Designs`.
+
+### Zapisywanie obrazu
+Aby zapisać obraz należy użyć przycisku `Zapisz obrazek`. Zapisany obraz może być później wczytany do edytora.
 
 ### Przenoszenie wzoru z edytora do oprogramowania brick'a
-Aby przenieść zaprojektowany w edytorze wzór należy użyć przycisku `Pobierz wzór`. Wzór zostanie przekonwertowany na instrukcje dla brick'a. Instrukcje te są automatycznie kopiowane do schowka. W razie gdyby kopiowanie nie powiodło się należy zrobić to ręcznie zaznaczając całość instrukcji z pola tekstowego. 
+Aby przenieść zaprojektowany w edytorze wzór należy użyć przycisku `Pobierz kod dla EV3`. Wzór zostanie przekonwertowany na instrukcje dla brick'a i automatycznie skopiowany do schowka. 
+W razie gdyby kopiowanie nie powiodło się należy zrobić to ręcznie zaznaczając całość instrukcji z pola tekstowego. 
 Dane zostały przygotowane w taki sposób, że oprogramowanie EV3 rozpozna je jako blok tablicy.
-Po uruchomieniu programu dla brick'a dostarczonego w projekcie należy otworzyć podprogram `Instructions`. W środku znajduje się tylko blok start oraz tablica z instrukcjami. Należy usunąć blok tablicy i wkleić ten z nowymi instrukcjami.
+Po uruchomieniu programu dla EV3 należy otworzyć podprogram `Instructions`. W środku znajduje się tylko blok start oraz tablica z instrukcjami. 
+Należy usunąć blok tablicy i wkleić nowy.
 
 ![Instructions block](readme-data/InstructionBlock.png)
 

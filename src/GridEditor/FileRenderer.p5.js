@@ -37,8 +37,8 @@ export default function FileRendererP5(p) {
     };
 
     const loadCanvas = (path) => {
-        console.log(path);
         let reader = new FileReader();
+
         reader.onload = function (e) {
             let img = p.createImg(e.target.result, '', '', () => {
                 if (img.width !== 120 || img.height !== 28) {
