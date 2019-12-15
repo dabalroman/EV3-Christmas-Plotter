@@ -8,7 +8,7 @@ import Editor from "./Components/Editor/Editor";
 import BottomButtonBar from "./Components/BottomButtonBar/BottomButtonBar";
 import Modal from "./Components/UI/Modal/Modal";
 import GetCodeModal from "./Components/GetCodeModal/GetCodeModal";
-import LoadSaveModal from "./Components/LoadSaveModal/LoadSaveModal";
+import LoadModal from "./Components/LoadModal/LoadModal";
 import FileRenderer from "./Components/FileRenderer/FileRenderer";
 
 class App extends Component {
@@ -16,8 +16,9 @@ class App extends Component {
         serializedPlotterGrid: "",
         sphereRotation: true,
         showGetCodeModal: false,
-        showLoadSaveModal: false,
-        saveCanvas: false
+        showLoadModal: true,
+        saveCanvas: false,
+        loadCanvas: false,
     };
 
     /**
@@ -57,18 +58,24 @@ class App extends Component {
                 <Editor
                     getPlotterGrid={this.getPlotterGrid}
                     getRenderedPlotterGrid={this.getRenderedPlotterGrid}
-                    modalActive={this.state.showGetCodeModal || this.state.showLoadSaveModal}
+                    modalActive={this.state.showGetCodeModal || this.state.showLoadModal}
                 />
+
                 <Sphere
                     renderedPlotterGrid={this.getRenderedPlotterGrid}
                     rotation={this.state.sphereRotation}
                 />
+
                 <BottomButtonBar
                     plotterGrid={this.getPlotterGrid}
                     showGetCodeModal={() => this.setState({showGetCodeModal: true})}
-                    showLoadSaveModal={() => this.setState({showLoadSaveModal: true})}
+                    showLoadModal={() => this.setState({showLoadModal: true})}
                     toggleSphereRotation={() => this.setState({sphereRotation: !this.state.sphereRotation})}
+                    saveCanvas={() => {
+                        this.setState({saveCanvas: true})
+                    }}
                 />
+
                 <Modal
                     visible={this.state.showGetCodeModal}
                     hideModal={() => this.setState({showGetCodeModal: false})}
@@ -77,24 +84,37 @@ class App extends Component {
                         code={this.plotterGrid.plotterCodeBlock}
                     />
                 </Modal>
+
                 <Modal
-                    visible={this.state.showLoadSaveModal}
-                    hideModal={() => this.setState({showLoadSaveModal: false})}
+                    visible={this.state.showLoadModal}
+                    hideModal={() => this.setState({showLoadModal: false})}
                 >
-                    <LoadSaveModal
-                        plotterGrid={this.getPlotterGrid}
-                        saveCanvas={() => {
-                            this.setState({saveCanvas: true})
+                    <LoadModal
+                        loadCanvas={(path) => {
+                            this.setState({loadCanvas: path})
                         }}
+                        hideModal={() => this.setState({showLoadModal: false})}
                     />
                 </Modal>
+
                 <FileRenderer
                     plotterGrid={this.getPlotterGrid}
+
                     saveCanvas={() => {
                         let temp = this.state.saveCanvas;
 
                         if (temp) {
-                            this.setState({saveCanvas: !temp});
+                            this.setState({saveCanvas: false});
+                        }
+
+                        return temp;
+                    }}
+
+                    loadCanvas={() => {
+                        let temp = this.state.loadCanvas;
+
+                        if (temp) {
+                            this.setState({loadCanvas: false});
                         }
 
                         return temp;

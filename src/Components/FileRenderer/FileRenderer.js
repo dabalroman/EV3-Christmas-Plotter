@@ -10,6 +10,7 @@ const fileRenderer = (props) => {
                 sketch={FileRendererP5}
                 plotterGrid={props.plotterGrid}
                 saveCanvas={props.saveCanvas}
+                loadCanvas={props.loadCanvas}
             />
         </div>
     );

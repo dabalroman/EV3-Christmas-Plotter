@@ -15,17 +15,23 @@ const bottomButtonBar = (props) => {
                 >
                     Wyczyść obraz
                 </Button>
+
                 <Button onClick={() => {
                     props.toggleSphereRotation();
                 }}>Włącz / Wyłącz obrót podglądu</Button>
+
                 <Button onClick={() => {
-                    props.showLoadSaveModal();
-                }}>Zapisz / Wczytaj obrazek</Button>
+                    props.showLoadModal();
+                }}>Wczytaj obrazek</Button>
+
+                <Button onClick={() => {
+                    props.saveCanvas();
+                }}>Zapisz obrazek</Button>
+
                 <Button onClick={() => {
                     props.plotterGrid().generatePlotterCode(PlotterGrid.GEN_VLBL);
                     props.showGetCodeModal();
-                }}
-                >
+                }}>
                     Pobierz kod dla EV3
                 </Button>
             </ButtonBar>

@@ -18,6 +18,7 @@ export default function FileRendererP5(p) {
         canvas = p.createCanvas(plotterGridSize.width, plotterGridSize.height);
         p.noLoop();
         p.noFill();
+        drawCanvas();
     };
 
     const drawCanvas = () => {
@@ -35,8 +36,40 @@ export default function FileRendererP5(p) {
         }
     };
 
+    const loadCanvas = (path) => {
+        console.log(path);
+        let reader = new FileReader();
+        reader.onload = function (e) {
+            let img = p.createImg(e.target.result, '', '', () => {
+                if (img.width !== 120 || img.height !== 28) {
+                    return;
+                }
+
+                p.background(255);
+                p.image(img, 0, 0);
+
+                for (let x = 0; x < plotterGridSize.width; x++) {
+                    for (let y = 0; y < plotterGridSize.height; y++) {
+                        plotterGrid.setCellState(x, y, p.get(x, y)[0] <= 127);
+                    }
+                }
+
+                img.remove();
+            });
+        };
+        reader.readAsDataURL(path);
+    };
+
     p.myCustomRedrawAccordingToNewPropsHandler = (props) => {
         plotterGrid = props.plotterGrid();
+
+        if (props.loadCanvas !== undefined) {
+            let path = props.loadCanvas();
+
+            if (path && path !== true) {
+                loadCanvas(path);
+            }
+        }
 
         if (props.saveCanvas !== undefined && props.saveCanvas() === true) {
             drawCanvas();

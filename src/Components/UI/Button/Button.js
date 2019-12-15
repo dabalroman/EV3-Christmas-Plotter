@@ -11,7 +11,8 @@ const button = (props) => {
     return (
         <div className={styles.join(' ')}>
             <button
-                onClick={props.onClick}>
+                onClick={props.onClick}
+            >
                 {props.children}
             </button>
         </div>
