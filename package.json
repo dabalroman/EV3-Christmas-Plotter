@@ -7,7 +7,8 @@
     "email": "dabalroman@gmail.com",
     "url": "https://github.com/dabalroman"
   },
-  "homepage": "https://github.com/dabalroman/EV3-Christmas-Plotter",
+  "homepage": ".",
+  "homepage_comment": "The '.' allows to build for offline usage (relative paths)",
   "license": "MIT",
   "keywords": [
     "editor",
