@@ -14,7 +14,6 @@ import StartupModal from "./Components/StartupModal/StartupModal";
 
 class App extends Component {
     state = {
-        serializedPlotterGrid: "",
         sphereRotation: true,
         showGetCodeModal: false,
         showLoadModal: false,
@@ -57,10 +56,11 @@ class App extends Component {
             <div className={Styles.app} onContextMenu={(e) => {
                 e.preventDefault();
             }}>
+                <div className={Styles.version}>v 1.0.1 - 16/12/2019</div>
                 <Editor
                     getPlotterGrid={this.getPlotterGrid}
                     getRenderedPlotterGrid={this.getRenderedPlotterGrid}
-                    modalActive={this.state.showGetCodeModal || this.state.showLoadModal}
+                    modalActive={this.state.showGetCodeModal || this.state.showLoadModal || this.state.showStartupModal}
                 />
 
                 <Sphere

@@ -34,6 +34,7 @@ export default function FileRendererP5(p) {
                 p.point(w, h);
             }
         }
+        plotterGrid.save();
     };
 
     const loadCanvas = (path) => {
@@ -55,6 +56,7 @@ export default function FileRendererP5(p) {
                 }
 
                 img.remove();
+                plotterGrid.save();
             });
         };
         reader.readAsDataURL(path);

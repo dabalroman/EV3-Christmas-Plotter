@@ -160,6 +160,8 @@ export default class PlotterGrid {
         this.plotterCode = plotterCodeGenerator.generateCode(this.grid);
         this.plotterCodeBlock = CodeGenerator.createLegoMindstormsDataBlock(this.plotterCode);
         Utils.copyToClipboard(this.plotterCodeBlock);
+
+        this.save();
     }
 
     /**
@@ -204,6 +206,10 @@ export default class PlotterGrid {
         }
     }
 
+    /**
+     * Save grid state in localStorage
+     * @return {string}
+     */
     save(): string {
         let s = '';
 
@@ -226,6 +232,10 @@ export default class PlotterGrid {
         return s;
     }
 
+    /**
+     * Load string image into editor
+     * @param encoded
+     */
     load(encoded = '') {
         if (encoded === '') {
             encoded = localStorage.getItem('grid');

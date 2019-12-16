@@ -4,6 +4,17 @@
     height: 100vh;
 }
 
+.version {
+    display: block;
+    position: fixed;
+    margin: 5px;
+    font-size: small;
+    color: #b9b9b9;
+    top: -0.3em;
+    left: 0;
+    padding: 0;
+}
+
 .debuggerControls {
     padding: 5px;
     background: #81d8ff;
