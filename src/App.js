@@ -56,7 +56,8 @@ class App extends Component {
             <div className={Styles.app} onContextMenu={(e) => {
                 e.preventDefault();
             }}>
-                <div className={Styles.version}>v 1.0.1 - 16/12/2019</div>
+                <div className={Styles.version}><a href="https://github.com/dabalroman/EV3-Christmas-Plotter">v 1.0.1 -
+                    16/12/2019</a></div>
                 <Editor
                     getPlotterGrid={this.getPlotterGrid}
                     getRenderedPlotterGrid={this.getRenderedPlotterGrid}
