@@ -1,6 +1,6 @@
 import React from 'react';
 import Styles from './GetCodeModal.module.css';
-import Video from './../../Assets/CodePasteIntoEditor.mp4';
+import Video from '../../Assets/Video/CodePasteIntoEditor.mp4';
 
 const GetCodeModal = (props) => {
     return (

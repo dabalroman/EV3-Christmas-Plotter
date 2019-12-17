@@ -36,6 +36,7 @@ export default class LoadModal extends Component {
                         loadCanvas={this.props.loadCanvas}
                         hideModal={this.props.hideModal}
                     >
+                        <i className='icon-upload'/>
                         Wczytaj obrazek
                     </FileInput>
                 </div>

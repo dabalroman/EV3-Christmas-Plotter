@@ -1,6 +1,6 @@
 import React from 'react';
 import Styles from './StartupModal.module.css';
-import Video from './../../Assets/Drawing.mp4';
+import Video from '../../Assets/Video/Drawing.mp4';
 
 const StartupModal = () => {
     return (

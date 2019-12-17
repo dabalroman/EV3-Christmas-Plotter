@@ -14,7 +14,7 @@ const Modal = (props) => {
                     {props.children}
                 </div>
                 <div className={Styles.button}>
-                    <Button onClick={props.hideModal}>Zamknij</Button>
+                    <Button onClick={props.hideModal}><i className='icon-cancel'/>Zamknij</Button>
                 </div>
             </div>
         </div>

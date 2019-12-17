@@ -13,25 +13,36 @@ const bottomButtonBar = (props) => {
                 }}
                         danger={true}
                 >
+                    <i className='icon-trash-empty'/>
                     Wyczyść obraz
                 </Button>
 
                 <Button onClick={() => {
                     props.toggleSphereRotation();
-                }}>Włącz / Wyłącz obrót podglądu</Button>
+                }}>
+                    <i className='icon-toggle-on'/>
+                    Włącz / Wyłącz obrót podglądu
+                </Button>
 
                 <Button onClick={() => {
                     props.showLoadModal();
-                }}>Wczytaj obrazek</Button>
+                }}>
+                    <i className='icon-upload'/>
+                    Wczytaj obrazek
+                </Button>
 
                 <Button onClick={() => {
                     props.saveCanvas();
-                }}>Zapisz obrazek</Button>
+                }}>
+                    <i className='icon-download'/>
+                    Zapisz obrazek
+                </Button>
 
                 <Button onClick={() => {
                     props.plotterGrid().generatePlotterCode(PlotterGrid.GEN_VLBL);
                     props.showGetCodeModal();
                 }}>
+                    <i className='icon-code'/>
                     Pobierz kod dla EV3
                 </Button>
             </ButtonBar>
