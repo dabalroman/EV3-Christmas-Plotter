@@ -25,8 +25,9 @@ export default class LoadModal extends Component {
                     Wczytaj obrazek
                 </h3>
                 <p className={Styles.text}>
-                    Obrazek który chcesz wczytać musi być zapisany jako plik <code>.png</code> o&nbsp;rozdzielczości
-                    120&nbsp;x&nbsp;28&nbsp;pikseli. Obrazek ten powinien być czarno-biały. Aktualny obrazek zostanie
+                    Obrazek, który chcesz wczytać musi być zapisany jako plik <code>.png</code> o&nbsp;rozdzielczości
+                    120&nbsp;x&nbsp;28&nbsp;pikseli lub jej wielokrotności. Obrazek ten powinien być czarno-biały.
+                    Aktualny obrazek zostanie
                     nadpisany!
                 </p>
                 <div className={Styles.buttons}>

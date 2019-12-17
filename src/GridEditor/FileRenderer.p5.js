@@ -5,25 +5,26 @@
 let plotterGrid = null;
 
 export default function FileRendererP5(p) {
+    const IMG_WIDTH = 120;
+    const IMG_HEIGHT = 28;
+
     /**
      * @type {Dimension} gridSize
      */
     let plotterGridSize;
 
-    let canvas;
-
     p.setup = () => {
         plotterGridSize = plotterGrid.getSize();
 
-        canvas = p.createCanvas(plotterGridSize.width, plotterGridSize.height);
         p.noLoop();
         p.noFill();
-        drawCanvas();
     };
 
-    const drawCanvas = () => {
-        p.background(255);
-        p.stroke(0);
+    const saveGraphics = () => {
+        let saveGraphics = p.createGraphics(IMG_WIDTH, IMG_HEIGHT);
+
+        saveGraphics.background(255);
+        saveGraphics.stroke(0);
 
         for (let w = 0; w < plotterGridSize.width; w++) {
             for (let h = 0; h < plotterGridSize.height; h++) {
@@ -31,32 +32,43 @@ export default function FileRendererP5(p) {
                     continue;
                 }
 
-                p.point(w, h);
+                saveGraphics.point(w, h);
             }
         }
+
+        p.save(saveGraphics, 'christmass_ball', 'png');
+        saveGraphics.remove();
         plotterGrid.save();
     };
 
-    const loadCanvas = (path) => {
+    const loadGraphics = (path) => {
         let reader = new FileReader();
 
         reader.onload = function (e) {
             let img = p.createImg(e.target.result, '', '', () => {
-                if (img.width < 120 || img.height < 28) {
+                if (img.width < IMG_WIDTH || img.height < IMG_HEIGHT) {
                     img.remove();
                     return;
                 }
 
-                p.background(255);
-                p.image(img, 0, 0);
+                //Allow to load images with res scaled up by integer factor
+                let scale = 1;
+                if (img.width % IMG_WIDTH === 0 && img.height % IMG_HEIGHT === 0) {
+                    scale = img.width / IMG_WIDTH;
+                }
+
+                let loadGraphics = p.createGraphics(img.width, img.height);
+                loadGraphics.background(255);
+                loadGraphics.image(img, 0, 0);
 
                 for (let x = 0; x < plotterGridSize.width; x++) {
                     for (let y = 0; y < plotterGridSize.height; y++) {
-                        plotterGrid.setCellState(x, y, p.get(x, y)[0] <= 127);
+                        plotterGrid.setCellState(x, y, loadGraphics.get(x * scale, y * scale)[0] <= 127);
                     }
                 }
 
                 img.remove();
+                loadGraphics.remove();
                 plotterGrid.save();
             });
         };
@@ -70,13 +82,12 @@ export default function FileRendererP5(p) {
             let path = props.loadCanvas();
 
             if (path && path !== true) {
-                loadCanvas(path);
+                loadGraphics(path);
             }
         }
 
         if (props.saveCanvas !== undefined && props.saveCanvas() === true) {
-            drawCanvas();
-            p.saveCanvas(canvas, 'christmass_ball', 'png');
+            saveGraphics();
         }
     };
 };
