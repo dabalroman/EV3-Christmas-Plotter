@@ -10,15 +10,14 @@ const GetCodeModal = (props) => {
                     Kod dla EV3 został automatycznie skopiowany.
                 </h3>
                 <p className={Styles.text}>
-                    Otwórz program 'Christmas Ball Decorator'
-                    i&nbsp;przejdź do zakładki <b>'Instructions'</b>. Usuń bloczek tablicy i&nbsp;wklej nowy na jego
+                    Otwórz program '<b>Christmas Ball Decorator</b>'
+                    i&nbsp;przejdź do zakładki '<b>Instructions</b>'. Usuń blok tablicy i&nbsp;wklej nowy na jego
                     miejsce jak pokazano obok.
                 </p>
                 <p className={Styles.text}>
                     Jeżeli nie możesz wkleić nowego bloczka do&nbsp;edytora EV3 to&nbsp;prawdopodobnie kod
-                    nie&nbsp;został
-                    automatycznie skopiowany.
-                    W&nbsp;takim przypadku skopiuj cały tekst z&nbsp;poniższego pola tekstowego.
+                    nie&nbsp;został automatycznie skopiowany.
+                    W&nbsp;takim przypadku skopiuj całą zawartość poniższego pola tekstowego.
                 </p>
                 <p className={Styles.center}><code>CTRL + A, CTRL + C</code></p>
                 <textarea className={Styles.textarea} rows='4' readOnly value={props.code}/>

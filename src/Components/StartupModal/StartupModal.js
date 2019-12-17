@@ -15,10 +15,12 @@ const StartupModal = () => {
                 <p className={Styles.text}><code>Lewy przycisk myszy</code> - Maluj</p>
                 <p className={Styles.text}><code>Prawy przycisk myszy</code> - Gumka</p>
                 <p className={Styles.text}>
-                    Możesz też wczytać gotowy obrazek, wystarczy wcisnąć <code>Wybierz obrazek</code>.
+                    Możesz też wczytać obrazek, wystarczy wcisnąć <code><i className='icon-upload'/> Wczytaj
+                    obrazek</code>.
                 </p>
                 <p>
-                    Gdy już skończysz projektować ozdobę naciśnij <code>Pobierz kod dla EV3</code>.
+                    Gdy już skończysz projektować ozdobę naciśnij <code><i className='icon-code'/> Pobierz kod dla
+                    EV3</code>.
                 </p>
             </div>
             <div>
