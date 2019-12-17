@@ -13,6 +13,10 @@ export default function FileRendererP5(p) {
      */
     let plotterGridSize;
 
+
+    let loadedCallback = () => {
+    };
+
     p.setup = () => {
         plotterGridSize = plotterGrid.getSize();
 
@@ -48,6 +52,7 @@ export default function FileRendererP5(p) {
             let img = p.createImg(e.target.result, '', '', () => {
                 if (img.width < IMG_WIDTH || img.height < IMG_HEIGHT) {
                     img.remove();
+                    loadedCallback();
                     return;
                 }
 
@@ -70,6 +75,7 @@ export default function FileRendererP5(p) {
                 img.remove();
                 loadGraphics.remove();
                 plotterGrid.save();
+                loadedCallback();
             });
         };
         reader.readAsDataURL(path);
@@ -77,6 +83,7 @@ export default function FileRendererP5(p) {
 
     p.myCustomRedrawAccordingToNewPropsHandler = (props) => {
         plotterGrid = props.plotterGrid();
+        loadedCallback = props.loadedCallback;
 
         if (props.loadCanvas !== undefined) {
             let path = props.loadCanvas();

@@ -11,6 +11,7 @@ const fileRenderer = (props) => {
                 plotterGrid={props.plotterGrid}
                 saveCanvas={props.saveCanvas}
                 loadCanvas={props.loadCanvas}
+                loadedCallback={props.loadedCallback}
             />
         </div>
     );

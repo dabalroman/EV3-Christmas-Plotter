@@ -1,0 +1,23 @@
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+
+    width: 100vw;
+    height: 100vh;
+
+    background-color: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(1px);
+    color: #fff;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    p {
+        text-shadow: 1px 1px 1px #313131;
+        font-size: larger;
+    }
+}

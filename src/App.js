@@ -11,6 +11,7 @@ import GetCodeModal from "./Components/GetCodeModal/GetCodeModal";
 import LoadModal from "./Components/LoadModal/LoadModal";
 import FileRenderer from "./Components/FileRenderer/FileRenderer";
 import StartupModal from "./Components/StartupModal/StartupModal";
+import WaitOverlay from "./Components/UI/WaitOverlay/WaitOverlay";
 
 class App extends Component {
     state = {
@@ -19,7 +20,8 @@ class App extends Component {
         showLoadModal: false,
         showStartupModal: true,
         saveCanvas: false,
-        loadCanvas: false
+        loadCanvas: false,
+        waitOverlay: false
     };
 
     /**
@@ -56,12 +58,18 @@ class App extends Component {
             <div className={Styles.app} onContextMenu={(e) => {
                 e.preventDefault();
             }}>
-                <div className={Styles.version}><a href="https://github.com/dabalroman/EV3-Christmas-Plotter">v 1.0.1 -
-                    16/12/2019</a></div>
+                <div className={Styles.version}>
+                    <a href="https://github.com/dabalroman/EV3-Christmas-Plotter">v 1.1.0 - 17/12/2019</a>
+                </div>
+
+                <WaitOverlay
+                    visible={this.state.waitOverlay}
+                />
+
                 <Editor
                     getPlotterGrid={this.getPlotterGrid}
                     getRenderedPlotterGrid={this.getRenderedPlotterGrid}
-                    modalActive={this.state.showGetCodeModal || this.state.showLoadModal || this.state.showStartupModal}
+                    modalActive={this.state.showGetCodeModal || this.state.showLoadModal || this.state.showStartupModal || this.state.waitOverlay}
                 />
 
                 <Sphere
@@ -94,7 +102,7 @@ class App extends Component {
                 >
                     <LoadModal
                         loadCanvas={(path) => {
-                            this.setState({loadCanvas: path})
+                            this.setState({loadCanvas: path, waitOverlay: true})
                         }}
                         hideModal={() => this.setState({showLoadModal: false})}
                     />
@@ -124,10 +132,14 @@ class App extends Component {
                         let temp = this.state.loadCanvas;
 
                         if (temp) {
-                            this.setState({loadCanvas: false});
+                            this.setState({loadCanvas: false, waitOverlay: true});
                         }
 
                         return temp;
+                    }}
+
+                    loadedCallback={() => {
+                        this.setState({waitOverlay: false})
                     }}
                 />
             </div>

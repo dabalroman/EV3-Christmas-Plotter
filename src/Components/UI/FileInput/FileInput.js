@@ -20,7 +20,7 @@ const fileInput = (props) => {
                         props.hideModal();
                     }}
                 />
-                Wczytaj obrazek
+                {props.children}
             </div>
         </div>
     );
