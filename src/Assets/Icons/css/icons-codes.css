@@ -1,0 +1,36 @@
+
+.icon-download:before {
+    content: '\e800';
+}
+
+/* '' */
+.icon-upload:before {
+    content: '\e801';
+}
+
+/* '' */
+.icon-trash-empty:before {
+    content: '\e802';
+}
+
+/* '' */
+.icon-cancel:before {
+    content: '\e804';
+}
+
+/* '' */
+.icon-spin1:before {
+    content: '\e830';
+}
+
+/* '' */
+.icon-code:before {
+    content: '\f121';
+}
+
+/* '' */
+.icon-toggle-on:before {
+    content: '\f205';
+}
+
+/* '' */
