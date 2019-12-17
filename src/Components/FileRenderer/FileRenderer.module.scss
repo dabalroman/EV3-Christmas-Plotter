@@ -1,3 +1,5 @@
-.fileSaveRenderer canvas {
-    display: none;
+.fileSaveRenderer {
+    canvas, img {
+        display: none;
+    }
 }

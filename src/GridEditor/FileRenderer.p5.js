@@ -42,7 +42,8 @@ export default function FileRendererP5(p) {
 
         reader.onload = function (e) {
             let img = p.createImg(e.target.result, '', '', () => {
-                if (img.width !== 120 || img.height !== 28) {
+                if (img.width < 120 || img.height < 28) {
+                    img.remove();
                     return;
                 }
 
