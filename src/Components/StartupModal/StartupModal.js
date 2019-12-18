@@ -1,6 +1,7 @@
 import React from 'react';
 import Styles from './StartupModal.module.css';
-import Video from '../../Assets/Video/Drawing.mp4';
+import VideoMP4 from '../../Assets/Video/Drawing.mp4';
+import VideoWEBM from '../../Assets/Video/Drawing.webm';
 
 const StartupModal = () => {
     return (
@@ -24,8 +25,9 @@ const StartupModal = () => {
                 </p>
             </div>
             <div>
-                <video className={Styles.video} height='222' width='228' autoPlay loop>
-                    <source src={Video} type='video/mp4'/>
+                <video className={Styles.video} height='222' width='228' muted autoPlay loop>
+                    <source src={VideoMP4} type='video/mp4'/>
+                    <source src={VideoWEBM} type='video/webm'/>
                     Nie można odtworzyć wideo.
                 </video>
             </div>

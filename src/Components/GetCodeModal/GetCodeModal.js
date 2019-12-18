@@ -1,6 +1,7 @@
 import React from 'react';
 import Styles from './GetCodeModal.module.css';
-import Video from '../../Assets/Video/CodePasteIntoEditor.mp4';
+import VideoMP4 from "../../Assets/Video/CodePasteIntoEditor.mp4";
+import VideoWEBM from "../../Assets/Video/CodePasteIntoEditor.webm";
 
 const GetCodeModal = (props) => {
     return (
@@ -23,8 +24,9 @@ const GetCodeModal = (props) => {
                 <textarea className={Styles.textarea} rows='4' readOnly value={props.code}/>
             </div>
             <div>
-                <video className={Styles.video} height='400' width='450' autoPlay loop>
-                    <source src={Video} type='video/mp4'/>
+                <video className={Styles.video} height='400' width='450' muted autoPlay loop>
+                    <source src={VideoMP4} type='video/mp4'/>
+                    <source src={VideoWEBM} type='video/webm'/>
                     Nie można odtworzyć wideo.
                 </video>
             </div>

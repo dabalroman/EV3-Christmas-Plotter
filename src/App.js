@@ -59,7 +59,7 @@ class App extends Component {
                 e.preventDefault();
             }}>
                 <div className={Styles.version}>
-                    <a href="https://github.com/dabalroman/EV3-Christmas-Plotter">v 1.1.0 - 17/12/2019</a>
+                    <a href="https://github.com/dabalroman/EV3-Christmas-Plotter">v 1.1.1 - 18/12/2019</a>
                 </div>
 
                 <WaitOverlay
