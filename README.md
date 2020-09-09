@@ -1,4 +1,6 @@
 # EV3 Christmas Ball Decorator
+![Showcase](readme-data/photos.jpg)
+
 'EV3 Christmas Ball Decorator' to projekt pozwalający na łatwe przyozdabianie bombek choinkowych własnymi wzorami.
 Wzory można projektować w dedykowanym edytorze. Pozwala on na łatwe utworzenie grafiki i przekonwertowanie jej na instrukcje zrozumiałe dla plotera. Instrukcje te wklejane są jako tablica do oprogramowania dla brick'a EV3. 
 
